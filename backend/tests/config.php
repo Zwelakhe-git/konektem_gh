@@ -1,0 +1,3 @@
+<?php 
+const TEST_TOKEN = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MTIzLCJyb2xlIjoiZ3Vlc3QiLCJlbWFpbCI6ImV4YW1wbGUuY29tIiwiZXhwIjoxNzgyMDQ3NjAzfQ.7GQTjMrNgIRniSjwjqkDALhw5o9MmZJnpCj6t-WDBP8';
+?>

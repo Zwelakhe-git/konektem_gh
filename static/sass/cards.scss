@@ -1,0 +1,28 @@
+:root{
+    --card-pad-v: 10px;
+    --card-pad-h: 10px;
+    --card-border-radius: 8px;
+    --card-h: fit-content;
+}
+.card{
+    border-radius: var(--card-border-radius);
+    height: var(--card-h);
+    &-header, &__header{
+        height: 50%;
+    }
+    &-body{
+        --card-pad-v: 0px;
+        border-radius: 0px;
+        padding: var(--card-pad-v) var(--card-pad-h);
+        height: 30%;
+        overflow: hidden;
+    }
+    &-footer{
+        --card-pad-v: 0px;
+        border-radius: 0px;
+        border-bottom-right-radius: inherit;
+        border-bottom-left-radius: inherit;
+        padding: var(--card-pad-v) var(--card-pad-h);
+        height: 20%;
+    }
+}

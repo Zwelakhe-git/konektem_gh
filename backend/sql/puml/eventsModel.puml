@@ -1,0 +1,15 @@
+entity events {
+    * id: bigint
+    ---
+    title: varchar(200)
+    description: text
+    event_data: date
+    location: varchar(200)
+    price: int
+    image_id: bigint
+    owner: varchar(255)
+    likes: int
+    shares: int
+    public: boolean
+    product_id: bigint
+}

@@ -1,0 +1,33 @@
+:root{
+    --grid-col-w: 150px;
+    --album-card-h: 200px;
+    --grid-cols: repeat(auto-fill, minmax(var(--grid-col-w), 1fr));
+}
+@import url("./cards.css");
+
+@mixin flex($direction: row){
+    display: flex;
+    flex-direction: $direction;
+}
+.flex{
+    @include flex();
+    &.col{
+        flex-direction: column;
+    }
+}
+
+.grid{
+    display: grid;
+}
+
+.albums-grid{
+    @extend .grid;
+    padding: 10px;
+    grid-template-columns: var(--grid-cols);
+}
+.album-card{
+    --card-h: var(--album-card-h);
+}
+.artist-info{
+    @include flex(row);
+}

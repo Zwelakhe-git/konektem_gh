@@ -1,0 +1,434 @@
+/* Animation for view switching */
+#gridView, #listView {
+    transition: opacity 0.3s ease;
+}
+
+/* Card hover effect */
+#gridView .card {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+#gridView .card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+}
+
+/* Badge styling */
+.badge {
+    font-weight: 500;
+}
+
+/* Filter panel styling */
+#filterPanel .card {
+    border: none;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .d-flex.justify-content-between {
+        flex-wrap: wrap;
+        gap: 0.5rem;
+    }
+    
+    #gridView .col-md-4 {
+        flex: 0 0 50%;
+        max-width: 50%;
+    }
+}
+
+@media (max-width: 480px) {
+    #gridView .col-md-4 {
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+}
+
+/* Filter count badge animation */
+#filterCount {
+    transition: all 0.3s ease;
+}
+
+#filterCount:empty {
+    display: none;
+}
+
+/* selection mode */
+/* Selection mode styles */
+.card.selection-mode {
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: all 0.2s ease;
+}
+
+.card.selection-mode:hover {
+    border-color: #28a745;
+    box-shadow: 0 4px 12px rgba(40, 167, 69, 0.2);
+}
+
+.card.selection-mode .selection-checkbox {
+    display: block !important;
+}
+
+/* Highlight selected items */
+.article-item .card {
+    transition: all 0.2s ease;
+}
+
+.article-item .card.selected {
+    border-color: #28a745;
+    background: #f0fff4;
+}
+
+/* Selection bar animation */
+#selectionBar {
+    animation: slideDown 0.3s ease;
+}
+
+@keyframes slideDown {
+    from {
+        transform: translateY(-100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* Checkbox styling in selection mode */
+.selection-checkbox {
+    background: rgba(255, 255, 255, 0.9);
+    padding: 5px;
+    border-radius: 50%;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.article-select {
+    cursor: pointer;
+}
+
+/* Disable hover effects on actions in selection mode */
+.selection-mode .article-actions {
+    display: none !important;
+}
+
+/* Table row selection */
+.table .article-item.selected {
+    background: #f0fff4 !important;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    #selectionBar .d-flex {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 10px;
+    }
+    
+    #selectionBar .d-flex .d-flex {
+        justify-content: center;
+    }
+}
+
+/* updates for adpative selection mode */
+/* Selection mode styles for list view */
+#listView tbody tr.selection-mode {
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+#listView tbody tr.selection-mode:hover {
+    background-color: #f8f9fa;
+}
+
+#listView tbody tr.selected {
+    background-color: #f0fff4 !important;
+    border-left: 4px solid #28a745;
+}
+
+#listView tbody tr.selection-mode .item-actions,
+#listView tbody tr.selection-mode .article-actions {
+    display: none !important;
+}
+
+#listView tbody tr .article-select {
+    display: none;
+}
+
+#listView tbody tr.selection-mode .article-select {
+    display: inline-block !important;
+}
+
+/* Checkbox styling in list view */
+#listView .article-select {
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+}
+
+/* Select all in list view */
+#selectAllList {
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+}
+
+/* Music page specific styles */
+.track-item .card .card-title {
+    font-size: 0.95rem;
+    font-weight: 600;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.track-item .card .text-muted.small {
+    font-size: 0.8rem;
+}
+
+.track-item .card .badge {
+    font-weight: 500;
+}
+
+/* Selection mode styles for music */
+.track-item .card.selection-mode {
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: all 0.2s ease;
+}
+
+.track-item .card.selection-mode:hover {
+    border-color: #28a745;
+    box-shadow: 0 4px 12px rgba(40, 167, 69, 0.2);
+}
+
+.track-item .card.selected {
+    border-color: #28a745;
+    background: #f0fff4;
+}
+
+/* List view selection */
+#listView tbody tr.selection-mode {
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+#listView tbody tr.selection-mode:hover {
+    background-color: #f8f9fa;
+}
+
+#listView tbody tr.selected {
+    background-color: #f0fff4 !important;
+    border-left: 4px solid #28a745;
+}
+
+#listView tbody tr.selection-mode .item-actions {
+    display: none !important;
+}
+
+/* Main page badge animation */
+.badge.bg-success .badge {
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% { opacity: 1; }
+    50% { opacity: 0.7; }
+    100% { opacity: 1; }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .actions-nav {
+        flex-direction: column;
+        gap: 0.5rem;
+        width: 100%;
+    }
+    
+    .actions-nav .btn {
+        width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    #gridView .col-md-4 {
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+}
+
+/* Events page specific styles */
+.event-item .card .card-title {
+    font-size: 0.95rem;
+    font-weight: 600;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.event-item .card .text-muted.small {
+    font-size: 0.8rem;
+    line-height: 1.6;
+}
+
+.event-item .card .badge.bg-success {
+    font-weight: 600;
+    padding: 0.4rem 0.8rem;
+}
+
+/* Selection mode styles for events */
+.event-item .card.selection-mode {
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: all 0.2s ease;
+}
+
+.event-item .card.selection-mode:hover {
+    border-color: #28a745;
+    box-shadow: 0 4px 12px rgba(40, 167, 69, 0.2);
+}
+
+.event-item .card.selected {
+    border-color: #28a745;
+    background: #f0fff4;
+}
+
+/* List view selection */
+#listView tbody tr.selection-mode {
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+#listView tbody tr.selection-mode:hover {
+    background-color: #f8f9fa;
+}
+
+#listView tbody tr.selected {
+    background-color: #f0fff4 !important;
+    border-left: 4px solid #28a745;
+}
+
+#listView tbody tr.selection-mode .item-actions {
+    display: none !important;
+}
+
+/* Price badge styling */
+.badge.bg-success {
+    font-size: 0.9rem;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    #gridView .col-md-4 {
+        flex: 0 0 50%;
+        max-width: 50%;
+    }
+}
+
+@media (max-width: 480px) {
+    #gridView .col-md-4 {
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+    
+    .event-item .card .d-flex.justify-content-between {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.3rem;
+    }
+}
+
+/* Interviews page specific styles */
+.interview-item .card .card-title {
+    font-size: 0.95rem;
+    font-weight: 600;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.interview-item .card .card-text {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Selection mode styles for interviews */
+.interview-item .card.selection-mode {
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: all 0.2s ease;
+}
+
+.interview-item .card.selection-mode:hover {
+    border-color: #28a745;
+    box-shadow: 0 4px 12px rgba(40, 167, 69, 0.2);
+}
+
+.interview-item .card.selected {
+    border-color: #28a745;
+    background: #f0fff4;
+}
+
+/* List view selection */
+#listView tbody tr.selection-mode {
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+#listView tbody tr.selection-mode:hover {
+    background-color: #f8f9fa;
+}
+
+#listView tbody tr.selected {
+    background-color: #f0fff4 !important;
+    border-left: 4px solid #28a745;
+}
+
+#listView tbody tr.selection-mode .item-actions {
+    display: none !important;
+}
+
+/* Stats icons */
+.interview-item .card .text-muted i {
+    width: 16px;
+    color: var(--text-muted);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    #gridView .col-md-6 {
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+    
+    .interview-item .card .d-flex.justify-content-between {
+        flex-wrap: wrap;
+        gap: 0.3rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .interview-item .card .card-title {
+        font-size: 0.9rem;
+    }
+    
+    .interview-item .card .card-text {
+        font-size: 0.8rem;
+    }
+}

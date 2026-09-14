@@ -1,0 +1,17 @@
+
+entity orders {
+    * id: bigint
+    ---
+    user_id: bigint
+    order_number: varchar(50)
+    total_amount: decimal(10,2)
+    order_status: enum('pending', 'confirmed', 'processing', 'completed', 'cancelled')
+    payment_status: enum('pending','paid','failed','refunded','partially_refunded')
+    order_date: timestamp
+    updated_at: timestamp
+    payment_method: varchar(50)
+    payment_date: timestamp
+    id_address: varchar(45)
+    user_agent: text
+    created_at: timestamp
+}

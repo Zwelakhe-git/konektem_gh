@@ -1,0 +1,483 @@
+/* ========================================
+   COMPONENTS - KONEKTEM
+   Reusable UI components
+   ======================================== */
+
+/* ---------- BUTTONS ---------- */
+.btn-konektem {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.6rem 1.2rem;
+    border: none;
+    border-radius: 2rem;
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-konektem-primary {
+    background: var(--primary-blue);
+    color: white;
+}
+
+.btn-konektem-primary:hover {
+    background: #1565c0;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 16px rgba(25, 118, 210, 0.3);
+}
+
+.btn-konektem-danger {
+    background: var(--primary-red);
+    color: white;
+}
+
+.btn-konektem-danger:hover {
+    background: #c62828;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 16px rgba(211, 47, 47, 0.3);
+}
+
+.btn-konektem-outline {
+    background: transparent;
+    color: var(--text-primary);
+    border: 2px solid #e9ecef;
+}
+
+.btn-konektem-outline:hover {
+    border-color: var(--primary-blue);
+    color: var(--primary-blue);
+}
+
+.btn-konektem-sm {
+    padding: 0.35rem 0.75rem;
+    font-size: 0.8rem;
+}
+
+.btn-konektem-lg {
+    padding: 0.8rem 2rem;
+    font-size: 1.1rem;
+}
+
+/* ---------- CARDS ---------- */
+.card-konektem {
+    background: var(--card-bg);
+    border-radius: var(--card-radius);
+    border: var(--card-border);
+    box-shadow: var(--card-shadow);
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.card-konektem:hover {
+    box-shadow: var(--card-shadow-hover);
+    transform: translateY(-4px);
+}
+
+.card-konektem .card-image {
+    width: 100%;
+    aspect-ratio: 16/9;
+    object-fit: cover;
+    background: #e9ecef;
+}
+
+.card-konektem .card-body {
+    padding: 1rem;
+}
+
+.card-konektem .card-title {
+    font-size: 1.05rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: var(--text-primary);
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.card-konektem .card-text {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    line-height: 1.6;
+}
+
+.card-konektem .card-footer {
+    padding: 0.75rem 1rem;
+    background: #f8fafc;
+    border-top: var(--card-border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+}
+
+.card-konektem .card-footer .card-stats {
+    display: flex;
+    gap: 0.75rem;
+}
+
+.card-konektem .card-footer .card-stats span {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+/* ---------- BADGES ---------- */
+.badge-konektem {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 0.25rem 0.6rem;
+    border-radius: 2rem;
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+.badge-konektem-primary {
+    background: rgba(25, 118, 210, 0.12);
+    color: var(--primary-blue);
+}
+
+.badge-konektem-success {
+    background: rgba(46, 125, 50, 0.12);
+    color: #2e7d32;
+}
+
+.badge-konektem-danger {
+    background: rgba(211, 47, 47, 0.12);
+    color: var(--primary-red);
+}
+
+.badge-konektem-warning {
+    background: rgba(237, 108, 2, 0.12);
+    color: #ed6c02;
+}
+
+.badge-konektem-info {
+    background: rgba(2, 136, 209, 0.12);
+    color: #0288d1;
+}
+
+/* ---------- PROGRESS BAR ---------- */
+.progress-konektem {
+    height: 4px;
+    background: #e9ecef;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.progress-konektem .progress-bar {
+    height: 100%;
+    background: var(--primary-blue);
+    border-radius: 4px;
+    transition: width 0.3s ease;
+}
+
+/* ---------- TOOLTIP ---------- */
+.tooltip-konektem {
+    position: relative;
+}
+
+.tooltip-konektem .tooltip-text {
+    visibility: hidden;
+    opacity: 0;
+    position: absolute;
+    bottom: calc(100% + 8px);
+    left: 50%;
+    transform: translateX(-50%);
+    background: #1a1a2e;
+    color: white;
+    padding: 0.4rem 0.8rem;
+    border-radius: 0.4rem;
+    font-size: 0.8rem;
+    white-space: nowrap;
+    transition: all 0.3s ease;
+    z-index: 100;
+}
+
+.tooltip-konektem .tooltip-text::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 6px solid transparent;
+    border-top-color: #1a1a2e;
+}
+
+.tooltip-konektem:hover .tooltip-text {
+    visibility: visible;
+    opacity: 1;
+}
+
+/* ---------- LOADING SPINNER ---------- */
+.spinner-konektem {
+    display: inline-block;
+    width: 1.2rem;
+    height: 1.2rem;
+    border: 2px solid #e9ecef;
+    border-top-color: var(--primary-blue);
+    border-radius: 50%;
+    animation: spinner-rotate 0.8s linear infinite;
+}
+
+@keyframes spinner-rotate {
+    to { transform: rotate(360deg); }
+}
+
+.spinner-konektem-sm {
+    width: 0.8rem;
+    height: 0.8rem;
+    border-width: 1.5px;
+}
+
+.spinner-konektem-lg {
+    width: 2rem;
+    height: 2rem;
+    border-width: 3px;
+}
+
+/* ---------- EMPTY STATE ---------- */
+.empty-state {
+    text-align: center;
+    padding: 3rem 1.5rem;
+    color: var(--text-muted);
+}
+
+.empty-state .empty-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    opacity: 0.5;
+}
+
+.empty-state .empty-title {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    margin-bottom: 0.5rem;
+}
+
+.empty-state .empty-text {
+    font-size: 0.9rem;
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+/* ---------- MODAL ---------- */
+.modal-konektem {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(4px);
+    z-index: 2000;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+}
+
+.modal-konektem.active {
+    display: flex;
+}
+
+.modal-konektem .modal-content {
+    background: white;
+    border-radius: var(--card-radius);
+    max-width: 560px;
+    width: 100%;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: 0 24px 64px rgba(0, 0, 0, 0.2);
+    animation: modal-slide-in 0.3s ease;
+}
+
+@keyframes modal-slide-in {
+    from {
+        transform: translateY(20px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.modal-konektem .modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.25rem 1.5rem;
+    border-bottom: 1px solid #e9ecef;
+}
+
+.modal-konektem .modal-header .modal-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin: 0;
+}
+
+.modal-konektem .modal-header .modal-close {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    color: var(--text-muted);
+    cursor: pointer;
+    padding: 0.25rem 0.5rem;
+    transition: color 0.2s ease;
+}
+
+.modal-konektem .modal-header .modal-close:hover {
+    color: var(--text-primary);
+}
+
+.modal-konektem .modal-body {
+    padding: 1.5rem;
+}
+
+.modal-konektem .modal-footer {
+    padding: 1rem 1.5rem;
+    border-top: 1px solid #e9ecef;
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.5rem;
+}
+
+/* ---------- TOGGLE SWITCH ---------- */
+.toggle-konektem {
+    position: relative;
+    display: inline-block;
+    width: 48px;
+    height: 26px;
+}
+
+.toggle-konektem input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.toggle-konektem .toggle-slider {
+    position: absolute;
+    cursor: pointer;
+    inset: 0;
+    background: #cbd5e1;
+    border-radius: 26px;
+    transition: all 0.3s ease;
+}
+
+.toggle-konektem .toggle-slider::before {
+    content: '';
+    position: absolute;
+    height: 20px;
+    width: 20px;
+    left: 3px;
+    bottom: 3px;
+    background: white;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+}
+
+.toggle-konektem input:checked + .toggle-slider {
+    background: var(--primary-blue);
+}
+
+.toggle-konektem input:checked + .toggle-slider::before {
+    transform: translateX(22px);
+}
+
+.toggle-konektem input:focus + .toggle-slider {
+    box-shadow: 0 0 0 3px rgba(25, 118, 210, 0.2);
+}
+
+.toggle-konektem-sm {
+    width: 36px;
+    height: 20px;
+}
+
+.toggle-konektem-sm .toggle-slider::before {
+    height: 14px;
+    width: 14px;
+    left: 3px;
+    bottom: 3px;
+}
+
+.toggle-konektem-sm input:checked + .toggle-slider::before {
+    transform: translateX(16px);
+}
+
+/* ---------- DARK THEME SUPPORT ---------- */
+[data-theme="dark"] .card-konektem {
+    background: #1e293b;
+    border-color: #334155;
+}
+
+[data-theme="dark"] .card-konektem .card-footer {
+    background: #0f172a;
+    border-color: #334155;
+}
+
+[data-theme="dark"] .modal-konektem .modal-content {
+    background: #1e293b;
+}
+
+[data-theme="dark"] .modal-konektem .modal-header {
+    border-color: #334155;
+}
+
+[data-theme="dark"] .modal-konektem .modal-footer {
+    border-color: #334155;
+}
+
+[data-theme="dark"] .btn-konektem-outline {
+    border-color: #334155;
+    color: #94a3b8;
+}
+
+[data-theme="dark"] .btn-konektem-outline:hover {
+    border-color: var(--primary-blue);
+    color: var(--primary-blue);
+}
+
+[data-theme="dark"] .toggle-konektem .toggle-slider {
+    background: #334155;
+}
+
+[data-theme="dark"] .progress-konektem {
+    background: #334155;
+}
+
+/* ---------- RESPONSIVE ---------- */
+@media (max-width: 768px) {
+    .card-konektem .card-body {
+        padding: 0.75rem;
+    }
+    
+    .modal-konektem .modal-content {
+        max-width: 100%;
+        margin: 0.5rem;
+        border-radius: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .btn-konektem {
+        padding: 0.4rem 0.8rem;
+        font-size: 0.8rem;
+    }
+    
+    .btn-konektem-lg {
+        padding: 0.6rem 1.2rem;
+        font-size: 0.95rem;
+    }
+}

@@ -1,0 +1,14 @@
+entity users {
+    * id: bigint
+    ---
+    name: varchar(100)
+    last_name: varchar(20)
+    email: varchar(50)
+    password_hash: varchar(255)
+    created_at: timestamp
+    google_id: varchar(255)
+    avatar_url: text
+    role: enum('admin', 'guest')
+    is_blocked: boolean
+    last_login: timestamp
+}

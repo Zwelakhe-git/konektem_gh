@@ -1,0 +1,316 @@
+.event-item-page {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+}
+*{
+    position: relative;
+}
+
+.event-header {
+    margin-bottom: 25px;
+    border-bottom: 2px solid #f0f0f0;
+    padding-bottom: 15px;
+}
+
+.event-title {
+    font-size: 28px;
+    color: #1a4b8c;
+    margin-bottom: 15px;
+    line-height: 1.3;
+}
+
+.event-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.event-date {
+    color: #666;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.event-stats {
+    display: flex;
+    gap: 20px;
+}
+
+.stat-item {
+    color: #666;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.stat-item i {
+    color: #2b6cb0;
+}
+
+/* Video Player Section */
+.video-player-section {
+    margin-bottom: 30px;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    position: relative;
+}
+
+.video-container {
+    position: relative;
+    width: 100%;
+    padding-bottom: 56.25%; /* 16:9 aspect ratio */
+    height: 0;
+    overflow: hidden;
+    background: #000;
+}
+
+.video-container iframe,
+.video-container video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+
+.video-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.7);
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 2;
+    transition: all 0.3s ease;
+}
+
+.video-overlay:hover {
+    background-color: rgba(0,0,0,0.6);
+}
+
+.video-overlay:hover .play-button {
+    transform: scale(1.1);
+    background: rgba(43, 108, 176, 1);
+}
+
+.play-button {
+    width: 80px;
+    height: 80px;
+    background: rgba(43, 108, 176, 0.9);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.3s ease, background 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+}
+
+.play-button i {
+    color: white;
+    font-size: 30px;
+    margin-left: 5px;
+}
+
+/* Video poster styling */
+#event-video {
+    background-color: #000;
+}
+
+/* Image Section (when no video) */
+.event-image-container {
+    margin-bottom: 25px;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    position: relative;
+}
+.blurred-bg{
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+    background-size: cover;
+    background-position: center;
+    filter: blur(20px) brightness(0.8);
+    z-index: 1;
+}
+
+.event-main-image {
+    width: 100%;
+    height: 400px;
+    object-fit: contain;
+    transition: transform 0.3s ease;
+    position: relative;
+    z-index: 2;
+}
+
+.event-main-image:hover {
+    transform: scale(1.02);
+}
+
+.event-content {
+    font-size: 16px;
+    line-height: 1.8;
+    color: #333;
+    margin-bottom: 30px;
+}
+
+.event-content p {
+    margin-bottom: 15px;
+    text-align: justify;
+}
+
+.event-actions {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 1px solid #f0f0f0;
+}
+
+/*.like-btn, .share-btn, .watch-btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.3s ease;
+}
+.like-btn {
+    background-color: #f8f9fa;
+    --text: #e74c3c;
+    border: 1px solid #e74c3c;
+}
+
+.like-btn:hover, .like-btn.liked {
+    background-color: #e74c3c;
+    --text: white;
+}
+
+.like-btn .count {
+    font-weight: bold;
+}
+
+.share-btn {
+    background-color: #f8f9fa;
+    --text: #3498db;
+    border: 1px solid #3498db;
+}
+
+.share-btn:hover, .share-btn.shared {
+    background-color: #3498db;
+    --text: white;
+}*/
+
+.watch-btn {
+    background-color: #2b6cb0;
+    color: white;
+}
+
+.watch-btn:hover {
+    background-color: #1a4b8c;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(43, 108, 176, 0.3);
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    .event-item-page {
+        padding: 15px;
+        margin: 10px;
+    }
+    
+    .event-title {
+        font-size: 22px;
+    }
+    
+    .event-meta {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+    
+    .event-stats {
+        gap: 15px;
+        justify-content: center;
+    }
+    
+    .event-main-image {
+        height: 250px;
+    }
+    
+    .event-actions {
+        justify-content: center;
+    }
+    
+    .video-container {
+        padding-bottom: 56.25%; /* Keep 16:9 aspect ratio */
+    }
+    
+    .play-button {
+        width: 60px;
+        height: 60px;
+    }
+    
+    .play-button i {
+        font-size: 24px;
+        margin-left: 4px;
+    }
+}
+
+@media (max-width: 480px) {
+    .event-main-image {
+        height: 200px;
+    }
+    
+    .event-title {
+        font-size: 20px;
+    }
+    
+    .event-content {
+        font-size: 15px;
+        line-height: 1.6;
+    }
+    
+    .like-btn, .share-btn, .watch-btn {
+        padding: 8px 15px;
+        font-size: 13px;
+    }
+    
+    .interview-actions {
+        flex-direction: column;
+    }
+    
+    .play-button {
+        width: 50px;
+        height: 50px;
+    }
+    
+    .play-button i {
+        font-size: 20px;
+        margin-left: 3px;
+    }
+}

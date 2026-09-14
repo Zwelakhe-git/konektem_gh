@@ -1,0 +1,19 @@
+#gridView, #listView {
+    transition: opacity 0.3s ease;
+}
+
+#gridView .card {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+#gridView .card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+}
+
+@media (max-width: 768px) {
+    #gridView .col-md-6 {
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+}

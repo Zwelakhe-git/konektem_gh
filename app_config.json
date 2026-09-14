@@ -1,0 +1,6 @@
+{
+    "context": "konektem",
+    "app_name": "konektem",
+    "app_image": "assets/favicon.png",
+    "ports": "[\"5050\", \"5051\"]"
+}

@@ -1,0 +1,6 @@
+entity images {
+    * id: bigint
+    ---
+    url: text
+    mime_type: varchar(255)
+}

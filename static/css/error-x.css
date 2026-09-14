@@ -1,0 +1,256 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: #0b1a2f; /* deep blue base */
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family:
+    "Segoe UI",
+    "Roboto",
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    sans-serif;
+  padding: 1.5rem;
+}
+
+.error-wrapper {
+  max-width: 1000px;
+  width: 100%;
+  background: #0f2640; /* rich navy blue */
+  border-radius: 3.5rem 3.5rem 2rem 2rem;
+  padding: 3rem 2rem 2.5rem;
+  box-shadow:
+    0 20px 40px rgba(0, 0, 0, 0.6),
+    0 0 0 2px #d32f2f inset,
+    0 0 0 4px #1565c0 inset;
+  /* red & blue double border — theme from image */
+  transition: all 0.2s;
+  text-align: center;
+  position: relative;
+}
+
+/* subtle background texture like the image’s “grain” */
+.error-wrapper::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background:
+    radial-gradient(
+      circle at 20% 30%,
+      rgba(255, 70, 70, 0.08),
+      transparent 60%
+    ),
+    radial-gradient(circle at 80% 70%, rgba(30, 100, 255, 0.1), transparent 70%);
+  pointer-events: none;
+}
+
+/* 404 – big, bold, theme colors */
+.big-404 {
+  font-size: clamp(8rem, 22vw, 16rem);
+  font-weight: 900;
+  letter-spacing: 0.06em;
+  line-height: 1;
+  background: linear-gradient(
+    145deg,
+    #e53935 0%,
+    #b71c1c 45%,
+    #1a5cbf 70%,
+    #0d47a1 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  text-shadow:
+    6px 6px 0 rgba(0, 20, 50, 0.7),
+    12px 12px 20px rgba(0, 0, 0, 0.5);
+  margin-bottom: 0.5rem;
+  position: relative;
+  z-index: 2;
+  /* extra pop with red/blue outline */
+  filter: drop-shadow(0 8px 12px rgba(0, 0, 0, 0.6));
+}
+
+/* optional subtle underline with theme */
+.big-404::after {
+  content: "";
+  display: block;
+  width: 30%;
+  height: 6px;
+  margin: 0.3rem auto 0;
+  background: linear-gradient(90deg, #d32f2f, #1565c0, #d32f2f);
+  border-radius: 40px;
+  opacity: 0.5;
+}
+
+/* message area — exactly "TOUT KOTE NENPOT KILE" */
+.message-block {
+  margin-top: 0.5rem;
+  margin-bottom: 2.8rem;
+  position: relative;
+  z-index: 2;
+}
+
+.message-block p {
+  font-size: clamp(1.6rem, 5vw, 3.2rem);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #f0f4ff;
+  text-shadow:
+    0 4px 0 #0a1a2e,
+    0 8px 12px rgba(0, 0, 0, 0.6);
+  background: linear-gradient(135deg, #ff5e5e, #ffb3b3);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  /* fallback for non-supporting browsers */
+  background-color: #e53935;
+  background-image: linear-gradient(135deg, #e53935, #f06292);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  display: inline-block;
+  padding: 0 0.25rem;
+  border-left: 4px solid #d32f2f;
+  border-right: 4px solid #1565c0;
+  border-radius: 2px;
+  background: none; /* we want gradient text only */
+  background-image: linear-gradient(135deg, #ff5e5e, #ff8a8a, #6a9cff);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* konektem.net link – exactly as requested */
+.footer-link {
+  margin-top: 1.2rem;
+  font-size: 1.6rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  position: relative;
+  z-index: 2;
+}
+
+.footer-link a {
+  color: #f0f8ff;
+  background: linear-gradient(145deg, #1a5cbf, #0d3f7a);
+  padding: 0.7rem 2.2rem;
+  border-radius: 60px;
+  text-decoration: none;
+  font-weight: 600;
+  box-shadow:
+    0 4px 0 #b71c1c,
+    0 8px 18px rgba(0, 0, 0, 0.5);
+  transition: all 0.15s ease;
+  border: 2px solid #d32f2f;
+  display: inline-block;
+  backdrop-filter: blur(2px);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+  font-size: clamp(1.2rem, 3vw, 1.9rem);
+}
+
+.footer-link a:hover {
+  transform: translateY(-3px);
+  box-shadow:
+    0 6px 0 #b71c1c,
+    0 14px 28px rgba(0, 0, 0, 0.7);
+  background: linear-gradient(145deg, #1f6bd0, #0f4b8a);
+  border-color: #ef5350;
+  color: white;
+}
+
+.footer-link a:active {
+  transform: translateY(4px);
+  box-shadow: 0 2px 0 #b71c1c;
+}
+
+/* small decorative elements – like the image’s vibe */
+.corner-deco {
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #d32f2f, #b71c1c);
+  opacity: 0.25;
+  bottom: 1.5rem;
+  left: 2rem;
+  filter: blur(4px);
+  z-index: 0;
+}
+.corner-deco-right {
+  right: 2rem;
+  left: auto;
+  background: radial-gradient(circle, #1976d2, #0d47a1);
+}
+
+/* small extra text to match the original image layout */
+.small-note {
+  margin-top: 1rem;
+  color: #8aa3c9;
+  font-weight: 300;
+  letter-spacing: 0.1rem;
+  font-size: 0.75rem;
+  opacity: 0.5;
+  text-transform: uppercase;
+  border-top: 1px dashed #2a4b6e;
+  padding-top: 1.2rem;
+  width: 60%;
+  margin-left: auto;
+  margin-right: auto;
+  position: relative;
+  z-index: 2;
+}
+
+/* responsive */
+@media (max-width: 600px) {
+  .error-wrapper {
+    padding: 2rem 1rem 1.8rem;
+    border-radius: 2.5rem;
+  }
+  .big-404 {
+    letter-spacing: 0.02em;
+  }
+  .message-block p {
+    font-size: 1.8rem;
+    border-left-width: 2px;
+    border-right-width: 2px;
+  }
+  .footer-link a {
+    padding: 0.5rem 1.6rem;
+  }
+  .corner-deco {
+    display: none;
+  }
+}
+
+/* extra theme: blue/red subtle background glow */
+.glow-badge {
+  display: none;
+}
+
+.d-flex{
+    display: flex;
+}
+
+.flex-col{
+    flex-direction: column;
+}
+.items-center{
+    align-items: center;
+}
+
+.gap-1{
+    gap: 1rem;
+}
+
+.gap-2{
+    gap: 2rem;
+}

@@ -1,0 +1,9 @@
+entity stream_details {
+  product_id: bigint,
+  stream_url: varchar(500),
+  start_time: datetime,
+  end_time: datetime,
+  max_viewers: int,
+  stream_key: VARCHAR(80),
+  cover_image: TEXT
+}

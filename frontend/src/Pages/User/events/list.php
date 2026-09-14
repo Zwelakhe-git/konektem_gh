@@ -1,0 +1,39 @@
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>Edite eveneman</h2>
+    <a href="<?= BASE_URL ?>/user/me/events/create" class="btn btn-primary">
+        <i class="fas fa-plus"></i> Ajoute eveneman
+    </a>
+</div>
+
+<?php if (isset($_GET['success'])): ?>
+<div class="alert alert-success">Оperasyion sikse</div>
+<?php endif; ?>
+
+<div class="row">
+    <?php foreach ($events as $event): ?>
+    <div class="col-md-4 mb-4">
+        <div class="card h-100">
+            <?php if ($event['image_url']): ?>
+            <img src="<?= $event['image_url'] ?>" class="card-img-top" style="height: 200px; object-fit: cover;">
+            <?php endif; ?>
+            <div class="card-body">
+                <h5 class="card-title"><?= htmlspecialchars($event['title']) ?></h5>
+                <p class="card-text">
+                    <strong>Dat:</strong> <?= $event['event_date'] ?><br>
+                    <strong>Kibo> <?= htmlspecialchars($event['location']) ?></strong><br>
+                    <strong>Pri:</strong> <?= $event['price'] ?> руб.
+                </p>
+            </div>
+            <div class="card-footer">
+                <a href="<?= BASE_URL ?>/user/me/events/<?= $event['id'] ?>/edit" class="btn btn-sm btn-warning">
+                    <i class="fas fa-edit"></i>
+                </a>
+                <a 
+                   class="btn btn-sm btn-danger del-btn" data-id="<?= $event['id'] ?>">
+                    <i class="fas fa-trash"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+    <?php endforeach; ?>
+</div>

@@ -1,0 +1,10 @@
+entity order_items {
+    * id: bigint
+    ---
+    order_id: bigint
+    product_id: bigint
+    quantity: bigint
+    price_at_time: decimal(10,2)
+    subtotal: decimal(10,2)
+    created_at: timestamp
+}

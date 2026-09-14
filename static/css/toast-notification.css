@@ -1,0 +1,121 @@
+/* toast-notification.css */
+:root {
+    /* Основные переменные для адаптации */
+    --toast-success-bg: rgba(76, 175, 79, 0.452);
+    --toast-warning-bg: rgba(255, 193, 7, 0.452);
+    --toast-error-bg: rgba(244, 67, 54, 0.452);
+    
+    --toast-text-color: white;
+    --toast-font-weight: bold;
+    --toast-padding: 16px 24px;
+    --toast-border-radius: 8px;
+    --toast-font-size: 16px;
+    --toast-min-width: 250px;
+    --toast-max-width: 350px;
+    
+    --toast-z-index: 9999;
+    --toast-margin-bottom: 15px;
+    
+    /* Анимация */
+    --toast-transition-duration: 0.3s;
+    --toast-transform-distance: 400px;
+}
+
+.toast-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: var(--toast-z-index);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    pointer-events: none; /* Чтобы клики проходили сквозь контейнер */
+    max-height: calc(100vh - 40px);
+    overflow-y: auto;
+    overflow-x: hidden;
+    
+    /* Скрываем переполнение */
+    padding: 0;
+    margin: 0;
+    
+    /* Плавная прокрутка для многих сообщений */
+    scrollbar-width: thin;
+}
+
+.toast-container::-webkit-scrollbar {
+    width: 5px;
+}
+
+.toast-message {
+    pointer-events: auto; /* Чтобы на уведомление можно было нажать */
+    min-width: var(--toast-min-width);
+    max-width: var(--toast-max-width);
+    padding: var(--toast-padding);
+    border-radius: var(--toast-border-radius);
+    font-size: var(--toast-font-size);
+    font-weight: var(--toast-font-weight);
+    --text: var(--toast-text-color);
+    color: var(--toast-text-color);
+    
+    /* Начальное состояние (скрыто) */
+    transform: translateX(var(--toast-transform-distance));
+    opacity: 0;
+    transition: transform var(--toast-transition-duration) ease-in-out,
+                opacity var(--toast-transition-duration) ease-in-out;
+    
+    /* Тень для лучшей читаемости */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    
+    /* Предотвращаем влияние на макет */
+    box-sizing: border-box;
+    word-wrap: break-word;
+}
+
+/* Состояние "показано" */
+.toast-message.show {
+    transform: translateX(0);
+    opacity: 1;
+}
+
+/* Состояние "скрыто" перед удалением */
+.toast-message.hide {
+    transform: translateX(var(--toast-transform-distance));
+    opacity: 0;
+}
+
+/* Стили для разных типов сообщений */
+.toast-success {
+    background-color: var(--toast-success-bg);
+    /* --toast-text-color: green; */
+}
+
+.toast-warning {
+    background-color: var(--toast-warning-bg);
+    /* --toast-text-color: yellow; */
+}
+
+.toast-error {
+    background-color: var(--toast-error-bg);
+    /* --toast-text-color: red; */
+}
+
+/* Дополнительный класс для текста, если нужны особые стили */
+.toast-text {
+    display: block;
+    line-height: 1.4;
+}
+
+/* Адаптация для мобильных устройств */
+@media (max-width: 768px) {
+    .toast-container {
+        top: 10px;
+        right: 10px;
+        left: 10px;
+    }
+    
+    .toast-message {
+        max-width: none;
+        width: calc(100% - 20px);
+        margin-right: 10px;
+    }
+}

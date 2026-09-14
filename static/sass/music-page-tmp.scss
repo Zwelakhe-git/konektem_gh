@@ -1,0 +1,63 @@
+:root{
+    --text: black;
+    --grid-col-w: 1fr;
+    --grid-col: repeat(auto-fill, minmax(var(--grid-col-w), 1fr));
+}
+*{
+    color: var(--text);
+}
+@import "./media-mixins.scss";
+
+@mixin flex($direction: row){
+    display: flex;
+    flex-direction: row;
+}
+@mixin flex-between($direction: row){
+    display: flex;
+    flex-direction: $direction;
+    justify-content: space-between;
+}
+a{
+    text-decoration: none;
+}
+@media (max-width: 768px){
+    :root{
+        --grid-col: 1fr;
+    }
+}
+
+.grid{
+    display: grid;
+    grid-template-columns: var(--grid-col);
+
+    @include tablet(){
+        --grid-col: 1fr 1fr;
+    }
+}
+.sections-nav{
+    @extend .grid;
+    gap: 15px;
+    --card-h: 150px;
+
+    &-item{
+        border-radius: 8px;
+        transition: transform 0.3s linear;
+        font-size: 30px;
+        padding: 10px;
+        & *{
+            color: transparent;
+            background: linear-gradient(45deg, blue, red, yellow);
+            background-clip: text;
+        }
+        
+        &:hover{
+            transform: scale(1.015);
+        }
+    }
+}
+.row{
+    @include flex();
+}
+.col-50{
+    width: 50%;
+}

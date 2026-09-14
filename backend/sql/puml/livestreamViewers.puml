@@ -1,0 +1,6 @@
+entity livestream_viewers{
+    * id: bigint
+    ---
+    user_ids: varchar
+    stream_id: bigint
+}

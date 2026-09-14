@@ -1,0 +1,132 @@
+/* Animation for view switching */
+#gridView, #listView {
+    transition: opacity 0.3s ease;
+}
+
+/* Card hover effect */
+#gridView .card {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+#gridView .card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+}
+
+/* Badge styling */
+.badge {
+    font-weight: 500;
+}
+
+/* Filter panel styling */
+#filterPanel .card {
+    border: none;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .d-flex.justify-content-between {
+        flex-wrap: wrap;
+        gap: 0.5rem;
+    }
+    
+    #gridView .col-md-4 {
+        flex: 0 0 50%;
+        max-width: 50%;
+    }
+}
+
+@media (max-width: 480px) {
+    #gridView .col-md-4 {
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+}
+
+/* Filter count badge animation */
+#filterCount {
+    transition: all 0.3s ease;
+}
+
+#filterCount:empty {
+    display: none;
+}
+
+/* selection mode */
+/* Selection mode styles */
+.card.selection-mode {
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: all 0.2s ease;
+}
+
+.card.selection-mode:hover {
+    border-color: #28a745;
+    box-shadow: 0 4px 12px rgba(40, 167, 69, 0.2);
+}
+
+.card.selection-mode .selection-checkbox {
+    display: block !important;
+}
+
+/* Highlight selected items */
+.article-item .card {
+    transition: all 0.2s ease;
+}
+
+.article-item .card.selected {
+    border-color: #28a745;
+    background: #f0fff4;
+}
+
+/* Selection bar animation */
+#selectionBar {
+    animation: slideDown 0.3s ease;
+}
+
+@keyframes slideDown {
+    from {
+        transform: translateY(-100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* Checkbox styling in selection mode */
+.selection-checkbox {
+    background: rgba(255, 255, 255, 0.9);
+    padding: 5px;
+    border-radius: 50%;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.article-select {
+    cursor: pointer;
+}
+
+/* Disable hover effects on actions in selection mode */
+.selection-mode .article-actions {
+    display: none !important;
+}
+
+/* Table row selection */
+.table .article-item.selected {
+    background: #f0fff4 !important;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    #selectionBar .d-flex {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 10px;
+    }
+    
+    #selectionBar .d-flex .d-flex {
+        justify-content: center;
+    }
+}

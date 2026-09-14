@@ -1,0 +1,38 @@
+.neon-bg{
+    z-index: 0;
+    position: fixed;
+    top: 0px;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+}
+.neon-line {
+  position: absolute;
+  width: 200%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #ff007f, #00f0ff, transparent);
+  opacity: 0.8;
+  animation: moveLines 6s linear infinite;
+}
+
+.neon-line:nth-child(1) {
+  top: 20%;
+  animation-delay: 0s;
+}
+.neon-line:nth-child(2) {
+  top: 40%;
+  animation-delay: 2s;
+}
+.neon-line:nth-child(3) {
+  top: 60%;
+  animation-delay: 4s;
+}
+.neon-line:nth-child(4) {
+  top: 80%;
+  animation-delay: 1s;
+}
+
+@keyframes moveLines {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}

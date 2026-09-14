@@ -1,0 +1,26 @@
+@startuml
+!include imagesModel.puml
+!include eventsModel.puml
+!include ordersModel.puml
+!include orderItemsModel.puml
+!include productsModel.puml
+!include transactionsModel.puml
+!include orderStatusHistory.puml
+!include musicModel.puml
+!include artists.puml
+!include streamDetails.puml
+!include livestreamViewers.puml
+
+events ||--o{ images : "image_id=id"
+events ||--o{ products : "product_id:id"
+orders ||--o{ users : "user_id=id"
+order_items ||--o{ orders : "order_id=id"
+order_items ||--o{ products : "product_id=id"
+transactions ||--o{ orders : "order_id=id"
+order_status_history ||--o{ orders : "order_id=id"
+music ||--o{ images : "image_id=id"
+music ||--o{ artists : "artist_id=id"
+
+livestream_viewers ||--o{ stream_details : "stream_id=product_id"
+stream_details ||--o{ products : "product_id=id"
+@enduml

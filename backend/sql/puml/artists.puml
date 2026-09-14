@@ -1,0 +1,5 @@
+entity artists {
+    * id: bigint
+    ---
+    name: varchar(100)
+}

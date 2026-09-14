@@ -1,0 +1,20 @@
+entity music {
+  `id` bigint
+  ---
+  artist_id: bigint
+  title: varchar(255)
+  url: varchar(255)
+  mime_type: varchar(255)
+  likes: int
+  downloads: int
+  plays: int
+  shares: int
+  order_no: int
+  owner: varchar(255)
+  genre: varchar(255)
+  album_id: bigint
+  audio_url: varchar(255)
+  track_number: int
+  image_id: bigint
+  public: boolean
+}

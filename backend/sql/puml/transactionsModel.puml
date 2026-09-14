@@ -1,0 +1,13 @@
+entity transactions {
+  id: bigint
+  ---
+  order_id: bigint
+  transaction_id: varchar(255)
+  amount: decimal(10,2)
+  currency: varchar(3)
+  status: enum('pending','completed','failed','refunded')
+  payment_system: varchar(50)
+  payment_details: json
+  created_at: timestamp
+  updated_at: timestamp
+}

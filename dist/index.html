@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+        <meta name="theme-color" content="black"/>
+        <meta http-equiv="Cache-Control" content="max-age=31536000">
+        <title>Konektem</title>
+        <!-- <link rel="shortcut icon" type="image/png" href="/media/images/favicon.png"/> -->
+        <script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+        <script src="https://kit.fontawesome.com/6f0be4257f.js" crossorigin="anonymous"></script>
+
+        <style>
+            body{
+                width: 100%;
+                margin: 0;
+                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            }
+            @media (min-width: 768px){
+                .close-btn{
+                    display: none;
+                }
+            }
+            #root{
+                min-height: 100vh;
+                width: 100%;
+            }
+            #loading-logo{
+                position: relative;
+                margin: auto;
+                margin-top: 35%;
+                animation: 1s linear infinite rotate-ani;
+                border-radius: 50%;
+                width: fit-content;
+                height: fit-content;
+            }
+
+            @keyframes rotate-ani{
+                from { transform: rotate(0deg) }
+                to { transform: rotate(360deg) }
+            }
+            
+            /* search bar styles */
+            .search-bar {
+                background: white;
+                border-radius: 9px;
+                overflow: hidden;
+                box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+                border: 2px solid transparent;
+                transition: all 0.3s ease;
+            }
+            
+            .search-bar:focus-within {
+                border-color: #3498db;
+                box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3);
+            }
+            
+            #tb-inp-el {
+                border: none;
+                padding: 12px 20px;
+                font-size: 1em;
+                background: transparent;
+                width: 100%;
+                color: #2c3e50;
+            }
+            
+            #tb-inp-el:focus {
+                border: none;
+                outline: none;
+                box-shadow: none;
+            }
+            
+            #tb-inp-el::placeholder {
+                color: #95a5a6;
+            }
+            
+            .search-bar .fa-magnifying-glass:hover {
+                background: #2980b9;
+                transform: scale(1.05);
+            }
+        </style>
+    <script defer src="react-main-page.js"></script><script defer src="main-page.5b13af9b8c4913243f7d.js"></script><link href="react-main-page.css" rel="stylesheet"><link href="main-page.5b13af9b8c4913243f7d.css" rel="stylesheet"></head>
+    <body>
+        <div id="root">
+            
+        </div>
+    </body>
+</html>
+    
