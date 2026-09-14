@@ -3,3 +3,4 @@ uploads/
 vendor/
 notes/
 node_modules/
+google-auth.php
