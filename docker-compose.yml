@@ -1,0 +1,116 @@
+
+version: '8.3'
+
+services:
+  konektem_app:
+    build: .
+    # container_name: konektem-app-container
+    ports:
+      - "5050-5054:80"
+    volumes:
+      - ./konektem/konektem_gh:/var/www/html
+      - ./vendor:/var/www/html/vendor
+      - ./libs:/var/www/html/libs
+    environment:
+      - PHP_ERROR_REPORTING=E_ALL
+    networks:
+      - app-network
+    deploy:
+      replicas: 3
+    depends_on:
+      - db
+      - db-replica # Optional: add replica dependency
+
+  # --- Your Existing Primary Database ---
+  db:
+    image: mysql:8.0
+    container_name: mysql-primary
+    restart: always
+    command: >
+      --server-id=1
+      --log-bin=mysql-bin
+      --binlog-format=ROW
+      --gtid-mode=ON
+      --enforce-gtid-consistency=ON
+      --log-replica-updates=ON
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: if0_39722397_zvelake
+      MYSQL_USER: if0_39722397
+      MYSQL_PASSWORD: pehBevo9Zxfx
+    ports:
+      - "3305:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+    networks:
+      - app-network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      timeout: 20s
+      retries: 10
+
+  # --- The New Read-Only Replica ---
+  db-replica:
+    image: mysql:8.0
+    container_name: mysql-replica
+    restart: always
+    command: >
+      --server-id=2
+      --relay-log=mysql-relay-bin
+      --read-only=ON
+      --gtid-mode=ON
+      --enforce-gtid-consistency=ON
+      --log-replica-updates=ON
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - "3304:3306" # Map to a different host port if 3306 is in use
+    volumes:
+      - replica_data:/var/lib/mysql
+    networks:
+      - app-network
+    depends_on:
+      db:
+        condition: service_healthy
+  
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: phpmyadmin
+    environment:
+      PMA_HOST: db
+      PMA_PORT: 3306
+      PMA_ARBITRARY: 1
+    ports:
+      - "8081:80"
+    depends_on:
+      - db
+    networks:
+      - app-network
+
+  redis:
+    image: redis:alpine
+    container_name: redis-cache
+    ports:
+      - "6378:6379"
+    networks:
+      - app-network
+
+  # Опционально: для очередей
+  # worker:
+  #   build: .
+  #   command: php artisan queue:work
+  #   volumes:
+  #     - ./src:/var/www/html
+  #   depends_on:
+  #     - db
+  #     - redis
+  #   networks:
+  #     - app-network
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  db_data:
+  replica_data:
