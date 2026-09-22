@@ -21,7 +21,9 @@ Log::init();
 class Database {
     protected static $sharedPdo = null; // Static shared connection
     protected static $sharedRedisClient = null;
+    protected static $sharedStorePdo = null;
     public $pdo;
+    public $storePdo;
     public $redisClient;
     private $lastConnectTime = 0;
     private $queryCount = 0;
@@ -37,19 +39,23 @@ class Database {
         if (self::$sharedPdo === null) {
             self::$sharedPdo = $this->createConnection();
         }
+        if (self::$sharedStorePdo === null){
+            self::$sharedStorePdo = $this->createConnection(STORE_DB_NAME);
+        }
         if(self::$sharedRedisClient === null){
             self::$sharedRedisClient = $this->createRedisConnection();
         }
         $this->pdo = self::$sharedPdo;
+        $this->storePdo = self::$sharedStorePdo;
         $this->redisClient = self::$sharedRedisClient;
     }
     
-    private function createConnection() {
+    private function createConnection($dbName = DB_NAME) {
         $retryCount = 0;
         while ($retryCount <= self::MAX_RETRIES){
             try {
                 $pdo = new PDO(
-                    "mysql:host=" . DB_HOST . ";dbname=" . DB_NAME . ";charset=utf8mb4",
+                    "mysql:host=" . DB_HOST . ";dbname=" . $dbName . ";charset=utf8mb4",
                     DB_USER, 
                     DB_PASS,
                     [

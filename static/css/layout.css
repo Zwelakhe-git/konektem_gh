@@ -113,9 +113,11 @@ body{
         grid-template-columns: 20% 40% 40%;
         gap: 15px;
         width: 80%;
+        
     }
     #main > div{
         margin: auto;
+        padding: 10px 0px;
     }
     #musicSection{
         grid-row: 1;
@@ -697,4 +699,21 @@ body{
 
 .track-item__action--download:active i {
     animation: downloadBounce 0.3s ease;
+}
+.container-bg{
+    position: absolute;
+    top: 0px;
+    left: -10px;
+    right: -10px;
+    bottom: 0px;
+    box-shadow: 0px 0px 5px grey;
+    border-radius: 8px;
+}
+@media (max-width: 480px){
+    .container-bg{
+        display: none;
+    }
+}
+@media (max-width: 768px){
+    .container-bg
 }

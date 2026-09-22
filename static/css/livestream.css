@@ -1,5 +1,6 @@
 :root{
   --page-bg: #0c0f1d;
+  --bs-page-bg: #0c0f1d;
   --text: white;
 }
 * {

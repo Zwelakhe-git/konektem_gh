@@ -1,36 +1,33 @@
-2026-09-10 17:33:43 [INFO]  - Session destroyed
-2026-09-10 17:33:43 [INFO] user login
-2026-09-10 17:33:47 [INFO] Database connection established successfully
-2026-09-10 17:33:47 [INFO] Redis connection established successfully
-2026-09-10 17:33:47 [ERROR] WARNING [2] Undefined array key "password_hash" at /var/www/html/backend/src/Models/AdminModel.php line 64
-2026-09-10 17:33:47 [ERROR] DEPRECATED [8192] password_verify(): Passing null to parameter #2 ($hash) of type string is deprecated at /var/www/html/backend/src/Models/AdminModel.php line 64
-2026-09-10 17:45:30 [INFO] Database connection established successfully
-2026-09-10 17:45:30 [INFO] Redis connection established successfully
-2026-09-10 17:45:30 [INFO] using cached user data
-2026-09-10 17:45:30 [INFO] caching user: user:74
-2026-09-10 17:45:30 [INFO] Database connection established successfully
-2026-09-10 17:45:30 [INFO] Redis connection established successfully
-2026-09-10 18:09:40 [INFO]  - Session destroyed
-2026-09-10 18:09:40 [INFO] user login
-2026-09-10 18:11:01 [INFO] Database connection established successfully
-2026-09-10 18:11:01 [INFO] Redis connection established successfully
-2026-09-10 18:11:01 [ERROR] DEPRECATED [8192] json_decode(): Passing null to parameter #1 ($json) of type string is deprecated at /var/www/html/backend/src/Models/AdminModel.php line 47
-2026-09-10 18:11:01 [ERROR] Authentication Error: array_filter(): Argument #1 ($array) must be of type array, null given in /var/www/html/backend/src/Models/AdminModel.php:48
-2026-09-10 18:13:31 [INFO] Database connection established successfully
-2026-09-10 18:13:31 [INFO] Redis connection established successfully
-2026-09-10 18:13:31 [INFO] using cached user data
-2026-09-10 18:13:31 [INFO] caching user: user:74
-2026-09-10 18:13:31 [INFO] Database connection established successfully
-2026-09-10 18:13:31 [INFO] Redis connection established successfully
-2026-09-10 18:16:11 [INFO] Database connection established successfully
-2026-09-10 18:16:11 [INFO] Redis connection established successfully
-2026-09-10 18:16:11 [INFO] deleting session from redis
-2026-09-10 18:16:11 [ERROR] WARNING [2] Undefined global variable $_SESSION at /var/www/html/backend/src/Controllers/AdminController.php line 172
-2026-09-10 18:16:11 [ERROR] WARNING [2] Trying to access array offset on null at /var/www/html/backend/src/Controllers/AdminController.php line 172
-2026-09-10 18:16:11 [ERROR] WARNING [2] Trying to access array offset on null at /var/www/html/backend/src/Controllers/AdminController.php line 172
-2026-09-10 18:16:11 [INFO]  - Session destroyed
-2026-09-10 18:16:11 [INFO] user login
-2026-09-10 18:18:18 [INFO] Database connection established successfully
-2026-09-10 18:18:18 [INFO] Redis connection established successfully
-2026-09-10 18:18:18 [INFO] Database connection established successfully
-2026-09-10 18:18:18 [INFO] Redis connection established successfully
+2026-09-14 12:22:00 [INFO] Database connection established successfully
+2026-09-14 12:22:00 [INFO] Redis connection established successfully
+2026-09-14 12:22:01 [INFO] Database connection established successfully
+2026-09-14 12:22:01 [INFO] Redis connection established successfully
+2026-09-14 12:23:56 [INFO] Database connection established successfully
+2026-09-14 12:23:56 [INFO] Redis connection established successfully
+2026-09-14 12:23:56 [INFO] Database connection established successfully
+2026-09-14 12:23:56 [INFO] Redis connection established successfully
+2026-09-14 12:24:03 [INFO] Database connection established successfully
+2026-09-14 12:24:03 [INFO] Redis connection established successfully
+2026-09-14 12:24:03 [INFO] Database connection established successfully
+2026-09-14 12:24:03 [INFO] Redis connection established successfully
+2026-09-14 12:34:30 [INFO] Database connection established successfully
+2026-09-14 12:34:30 [INFO] Redis connection established successfully
+2026-09-14 12:34:52 [INFO] Database connection established successfully
+2026-09-14 12:34:52 [INFO] Redis connection established successfully
+2026-09-14 12:34:55 [INFO] Database connection established successfully
+2026-09-14 12:34:55 [INFO] Redis connection established successfully
+2026-09-14 12:34:57 [INFO] Database connection established successfully
+2026-09-14 12:34:57 [INFO] Redis connection established successfully
+2026-09-14 18:18:45 [INFO] Database connection established successfully
+2026-09-14 18:18:45 [INFO] Redis connection established successfully
+2026-09-14 18:18:45 [INFO] Database connection established successfully
+2026-09-14 18:18:45 [INFO] Redis connection established successfully
+2026-09-14 18:18:45 [INFO] deleting session from redis
+2026-09-14 18:18:45 [ERROR] WARNING [2] Undefined array key "user" at /var/www/html/backend/src/Controllers/AdminController.php line 171
+2026-09-14 18:18:45 [ERROR] WARNING [2] Trying to access array offset on null at /var/www/html/backend/src/Controllers/AdminController.php line 171
+2026-09-14 18:18:45 [INFO]  - Session destroyed
+[22-Sep-2026 16:08:44 America/New_York] PHP Warning:  require(/var/www/html/konektem/konektem_gh/vendor/autoload.php): Failed to open stream: No such file or directory in /var/www/html/konektem/konektem_gh/index.php on line 7
+[22-Sep-2026 16:08:44 America/New_York] PHP Fatal error:  Uncaught Error: Failed opening required '/var/www/html/konektem/konektem_gh/vendor/autoload.php' (include_path='.:/usr/share/php') in /var/www/html/konektem/konektem_gh/index.php:7
+Stack trace:
+#0 {main}
+  thrown in /var/www/html/konektem/konektem_gh/index.php on line 7

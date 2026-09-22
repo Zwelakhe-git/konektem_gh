@@ -1,0 +1,26 @@
+php_value display_errors On
+php_value mbstring.http_input auto
+php_value date.timezone America/New_York
+php_value upload_max_filesize 100M
+php_value post_max_size 120M
+<IfModule mod_headers.c>
+    <FilesMatch "\.(html|htm|css|js)$">
+        Header set Cache-Control "no-cache no-store must-revalidate"
+        Header set Pragma "no-cache"
+        Header set Expires "0"
+    </FilesMatch>
+</IfModule>
+RewriteEngine on
+
+RewriteCond %{HTTP:Authorization} ^(.*)
+RewriteRule .* - [E=HTTP_AUTHORIZATION:%1]
+RewriteCond %{REQUEST_FILENAME} -f [OR]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^ - [L]
+
+# konektem приложение
+RewriteRule ^konektem(/?.*)$ index.php?route=$1 [L,QSA]
+
+
+# Маршрутизация для корня
+RewriteRule ^(.*)$ index.php?route=$1 [L,QSA]

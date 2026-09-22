@@ -7,7 +7,8 @@
         <?php if(isset($og_params)){
             foreach($og_params as $k => $v){
         ?>
-        <meta property="og:<?= $k?>" content="<?= $v?>" />
+        <meta property="og:<?= htmlspecialchars($k, ENT_QUOTES, 'UTF-8')?>" content="<?= htmlspecialchars($v, ENT_QUOTES, 'UTF-8')?>" />
+        <meta propery="twitter:<?= htmlspecialchars($k, ENT_QUOTES, 'UTF-8')?>" content="<?= htmlspecialchars($v, ENT_QUOTES, 'UTF-8')?>" />
         <?php
             }
         }?>
