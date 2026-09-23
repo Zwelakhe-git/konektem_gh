@@ -430,7 +430,7 @@ $paymentConfirm = function ($req, $res) use ($view) {
         $context['paymentStatus'] = $_GET['status'] ?? 'success';
         $context['orderNumber'] = $_GET['order_id'] ?? null;
         $context['amount'] = $_GET['amount'] ?? null;
-        $context['transactionId'] = $_GET['transaction_id'] ?? null;
+        $context['transactionId'] = $_GET['transaction_id'] ?? $_GET['transactionId'] ?? null;
 
         // Названия платежных систем
         $platformNames = [
