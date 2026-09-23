@@ -483,6 +483,7 @@ class PaymentApi {
                 Log::error("MonCash webhook: Failed to get transaction details");
                 return $res->status(500)->json(['success' => false, 'message' => 'Failed to get transaction details']);
             }
+            Log::info("moncash transaction details: " . print_r($transactionDetails, true));
             
             // The transaction details contain the orderId we sent
             $moncashOrderId = $transactionDetails['payment']['orderId'] ?? $orderId;

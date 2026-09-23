@@ -430,6 +430,37 @@
         }, 5000);
         <?php endif; ?>
     </script>
+    <script>
+        
+        async function processPayment(){
+            const urlParams = new URLSearchParams(window.location.search);
+            const transactionId = urlParams.get('transactionId');
+            if(!transactionId){
+                return;
+            }
+            try {
+                let response = await fetch('/api/payment/moncash/webhook', {
+                    method: 'POST',
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        transactionId: transactionId
+                    })
+                });
+                let result = await response.json();
+
+                if(result.success){
+                    showSuccess("success");
+                } else {
+                    showError(result.message || "Error");
+                }
+            } catch(e){
+                console.error(e);
+            }
+        }
+        processPayment();
+    </script>
 
 </body>
 </html>
