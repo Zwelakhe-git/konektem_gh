@@ -23,7 +23,7 @@ WORKDIR /var/www/html
 
 RUN a2enmod rewrite
 
-COPY ./konektem/konektem_gh /var/www/html/
+COPY . /var/www/html/
 COPY ./vendor /var/www/html/vendor/
 COPY ./libs /var/www/html/libs/
 COPY ./.htaccess /var/www/html/

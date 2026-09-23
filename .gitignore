@@ -4,3 +4,6 @@ vendor/
 notes/
 node_modules/
 google-auth.php
+libs/
+vendor.zip
+libs.zip
