@@ -487,10 +487,14 @@ class PaymentApi {
             
             // The transaction details contain the orderId we sent
             $moncashOrderId = $transactionDetails['payment']['orderId'] ?? $orderId;
+            $orderNumber = $transactionDetails['payment']['reference'];
+            $order = $this->getOrderByNumber($orderNumber);
+            $moncashOrderId = $order['id'];
             //$moncashOrderId = $orderId;
             
             // Find the transaction by orderId (since we don't have the payment_token anymore)
             // Or use the transactionId if we stored it
+            
             $transaction = $this->getTransactionByOrderId($moncashOrderId);
             
             if (!$transaction) {
@@ -498,6 +502,13 @@ class PaymentApi {
                 return $res->status(404)->json(['success' => false, 'message' => 'Transaction not found']);
             }
             Log::info("transaction: " . print_r($transaction, true));
+
+            if($transaction['status'] !== 'pending'){
+                return $res->json([
+                    'success' => false,
+                    'message' => "Transaction already completed"
+                ]);
+            }
             
             // Update the transaction with the real transaction ID from MonCash
             $this->updateTransactionId($transaction['id'], $transactionId);

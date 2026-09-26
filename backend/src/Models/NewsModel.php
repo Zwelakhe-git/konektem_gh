@@ -26,6 +26,7 @@ class NewsModel extends Database {
         'n.image_id',
         'i.url AS image_url',
     ];
+    private const string ARTICLES_REDIS_KEY_PATTERN = 'article:*';
     private const array DEFAULT_AUTHOR_INFO = [
         'name' => 'Konektem.net',
         'avartar_url' => '/konektem/assets/images/logo.png',
@@ -37,6 +38,24 @@ class NewsModel extends Database {
     }
     public function getAllArticles() {
         // switch no_pos to general
+        $cached = [];
+        if($this->redisClient){
+            $keys = $this->redisClient->keys(self::ARTICLES_REDIS_KEY_PATTERN);
+            if(count($keys) > 0){
+                foreach($keys as $key){
+                    $article = $this->redisClient->get($key);
+                    try {
+                        $article = json_decode($article, true);
+                        $cached[] = $article;
+                    } catch(\Exception $e){}
+                }
+                if(count($cached) > 0){
+                    Log::info("articles cache hit: " . count($cached));
+                    return $cached;
+                }
+                Log::info("articles cache miss");
+            }
+        }
         $stmt = $this->pdo->query("
             SELECT ". implode(',', self::ARTICLE_COLUMNS) . ",
             CASE
@@ -56,12 +75,25 @@ class NewsModel extends Database {
             $stmt->execute([$aid]);
             $author = $stmt->fetch();
             $article['author'] = $author ?? self::DEFAULT_AUTHOR_INFO;
+
+            if($this->redisClient){
+                $key = "article:{$article['id']}";
+                $this->redisClient->set($key, json_encode($article, JSON_UNESCAPED_UNICODE));
+                $this->redisClient-expire($key, 3600 * 24);
+            }
         }
         return $articles;
     }
     
     public function getArticleById($id) {
         try {
+            if($this->redisClient){
+                $key = "article:$id";
+                $cached = $this->redisClient->get($key);
+                if($cached){
+                    return json_decode($cached, true);
+                }
+            }
             $stmt = $this->pdo->prepare("
                 SELECT ". implode(',', self::ARTICLE_COLUMNS) .",
                 CASE
@@ -80,6 +112,11 @@ class NewsModel extends Database {
                 $stmt->execute([$article['author_id']]);
                 $article['author'] = $author ?? self::DEFAULT_AUTHOR_INFO;
             }
+            if($this->redisClient){
+                $key = "article:$id";
+                $this->redisClient->set($key, json_encode($article, JSON_UNESCAPED_UNICODE));
+                $this->redisClient-expire($key, 3600 * 24);
+            }
             return $article;
         } catch(\PDOException $e){
             Log::error("{$e->getMessage()} in {$e->getFile()} line {$e->getLine()}");
@@ -93,11 +130,29 @@ class NewsModel extends Database {
     public function getArticlesByUser($userId){}
 
     public function getArticleByTitleHash($title_hash){
-        $sql = "SELECT " . implode(',', self::ARTICLE_COLUMNS) . " FROM news n LEFT JOIN images i ON n.image_id = i.id WHERE n.title_hash = ?";
+        if($this->redisClient){
+            $keys = $this->redisClient->keys(self::ARTICLES_REDIS_KEY_PATTERN);
+            if(count($keys) > 0){
+                foreach($keys as $key){
+                    $article = $this->redisClient->get($key);
+                    try {
+                        $article = json_decode($article, true);
+                        if($article['title_hash'] === $title_hash){
+                            return $article;
+                        }
+                    } catch(\Exception $e){
+                        Log::error("", $e);
+                    }
+                }
+            }
+        }
+        //$sql = "SELECT " . implode(',', self::ARTICLE_COLUMNS) . " FROM news n LEFT JOIN images i ON n.image_id = i.id WHERE n.title_hash = ?";
+        $sql = "SELECT id FROM news WHERE title_hash = ?";
         try {
             $stmt = $this->pdo->prepare($sql);
             $stmt->execute([$title_hash]);
             $article = $stmt->fetch();
+            $article = $this->getArticleById($article['id']);
             return $article;
         } catch(\Exception $e){
             Log::error("{$e->getMessage()} in {$e->getFile()} line {$e->getLine()}");
@@ -144,14 +199,36 @@ class NewsModel extends Database {
         if (!in_array($type, $allowedTypes)) {
             return ['success' => false, 'message' => 'Invalid stat type'];
         }
-        
+        $thresholdReached = false;
+        $threshold = 1000;
         try {
-            $sql = "UPDATE news SET $type = $type + ? WHERE id = ?";
-            $stmt = $this->pdo->prepare($sql);
-            $stmt->execute([$increment, $articleId]);
-            $stmt = $this->pdo->prepare("SELECT $type FROM news WHERE id = ?");
-            $stmt->execute([$articleId]);
-            $currValue = $stmt->fetchColumn();
+            
+            if($this->redisClient){
+                $key = "$type:article:$articleId";
+                $oldValue = (int)($this->redisClient->get($key) ?? -1);
+                if($oldValue < 0){
+                    $stmt = $this->pdo->prepare("SELECT $type FROM news WHERE id = ?");
+                    $stmt->execute([$articleId]);
+                    $oldValue = $stmt->fetchColumn();
+                    $this->redisClient->set($key, $oldValue);
+                }
+                $currValue = $oldValue + $increment;
+                $this->redisClient->set($key, $currValue);
+
+                if($currValue % $threshold === 0){
+                    $sql = "UPDATE news SET $type = ? WHERE id = ?";
+                    $stmt = $this->pdo->prepare($sql);
+                    $stmt->execute([$currValue, $articleId]);
+                }
+            } else {
+                $sql = "UPDATE news SET $type = $type + ? WHERE id = ?";
+                $stmt = $this->pdo->prepare($sql);
+                $stmt->execute([$increment, $articleId]);
+
+                $stmt = $this->pdo->prepare("SELECT $type FROM news WHERE id = ?");
+                $stmt->execute([$articleId]);
+                $currValue = $stmt->fetchColumn();
+            }
             
             return ['success' => true, 'message' => 'Stats updated', $type => $currValue];
         } catch (\PDOException $e) {
@@ -186,9 +263,10 @@ class NewsModel extends Database {
                     Log::warn("article not added to main page");
                 }
             }
-            // $stmt = $this->pdo->prepare("SELECT title_hash FROM news WHERE id = ?");
-            // $stmt->execute([$id]);
-            // $article = $stmt->fetch();
+            if($data['publish'] && $this->redisClient){
+                // cache the article to redis
+                $this->getArticleById($id);
+            }
             return [
                 'success' => true,
                 'message' => 'Article successfully created'
@@ -256,6 +334,10 @@ class NewsModel extends Database {
             if(isset($data['new_position']) && $data['new_position'] && $data['new_position'] !== $data['old_position']){
                 $this->mainpagemodel->addItem($data['new_position'], $id);
             }
+            if($this->redisClient){
+                $this->redisClient->del("article:$id");
+                $this->getArticleById($id);
+            }
             $this->pdo->commit();
             return [
                 'success' => true,
@@ -285,6 +367,13 @@ class NewsModel extends Database {
     public function deleteArticle($id) {
         $stmt = $this->pdo->prepare("DELETE FROM news WHERE id = ?");
         $stmt->execute([$id]);
+
+        if($this->redisClient){
+            $this->redisClient->del("article:$id");
+            foreach(["likes", "reads", "shares"] as $action){
+                $this->redisClient->del("$action:article:$id");
+            }
+        }
         return [
             'success' => true,
             'message' => 'Article successfully deleted'

@@ -24,7 +24,7 @@ class Log{
     }
     public static function warning($msg = "Default warning message", \Throwable $e=null){
         if($e && (get_class($e) === 'Exception' || is_subclass_of($e, 'Throwable'))){
-            return DEBUG && self::warn($err);
+            return DEBUG && self::warn($e);
         }
         DEBUG && self::warn($msg);
     }

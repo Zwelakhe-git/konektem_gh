@@ -197,12 +197,12 @@ class AdminModel extends Database {
             if($result === false || $result['status'] != 'active'){
                 $sql = "SELECT sp.id FROM subscription_plans sp LEFT JOIN products p ON sp.product_id = p.id WHERE p.product_type = 'premium_subscription'";
                 $stmt = $this->pdo->query($sql);
-                $planId = $stmt->fetch() ?: -1;
+                $planId = $stmt->fetchColumn() ?: -1;
 
                 if($planId < 0){
                     return ['success' => false, 'message' => 'Invalid plan id'];
                 }
-                $sql = "INSERT INTO subscriptions (user_id, plan_id) VALUES (?)";
+                $sql = "INSERT INTO subscriptions (user_id, plan_id) VALUES (?,?)";
                 $stmt = $this->pdo->prepare($sql);
                 $result = $stmt->execute([$user_id, $planId]);
                 
@@ -218,11 +218,16 @@ class AdminModel extends Database {
             $this->pdo->rollback();
             Log::error("{$e->getMessage()} in {$e->getFile()} line {$e->getLine()}");
             return ["success" => false, "message" => "Server error"];
+        } catch(\Exception $e){
+            $this->pdo->rollback();
+            Log::error("{$e->getMessage()} in {$e->getFile()} line {$e->getLine()}");
+            return ["success"=> false, "message"=> "Server error"];
         }
     }
 
     private function sendPremiumSubscriptionEmail($userInfo){
         try {
+            Log::info("sending successful premium subscription email");
             $toEmail = $userInfo['email'];
             $toName = $userInfo['name'] ?? substr($userInfo['email'], 0, strpos($userInfo['email'], '@'));
             $email = new \Konektem\Models\EmailModel();
@@ -235,7 +240,9 @@ class AdminModel extends Database {
             } else {
                 Log::error("Failed to send Premium subscription email: " . ($result['error'] ?? 'Unknown error'));
             }
-        } catch(\Exception $e){}
+        } catch(\Exception $e){
+            Log::error("{$e->getMessage()} in {$e->getFile()} line {$e->getLine()}");
+        }
     }
     
     
