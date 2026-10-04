@@ -66,25 +66,25 @@
 
       <div class="paid"><span class="dot"></span>PAYMENT CONFIRMED</div>
 
-      <h1 class="event-name">Midnight Jazz &amp; Vinyl Night</h1>
+      <h1 class="event-name"><?= htmlspecialchars($eventName)?></h1>
       <div class="event-meta">
-        Sat, Oct 18, 2026 · 8:00 PM<br>
-        The Blue Room, Downtown Hall<br>
-        Access link sent separately by email
+          <?= nl2br(htmlspecialchars($eventMeta))?>
       </div>
 
       <hr class="rule">
 
       <div class="items">
         <div class="row"><span class="label">General Admission ×2</span><span>$90.00</span></div>
-        <div class="row"><span class="label">Service fee</span><span>$6.50</span></div>
+        <?php if(isset($serviceFee)): ?>
+        <div class="row"><span class="label">Service fee</span><span><?= $serviceFee ?></span></div>
+        <?php endif; ?>
       </div>
 
       <hr class="rule">
 
-      <div class="total-row"><span>TOTAL PAID</span><span>$96.50</span></div>
-      <div class="row"><span class="label">Paid with</span><span>Visa •••• 4321</span></div>
-      <div class="row"><span class="label">Date</span><span>Sep 24, 2026, 3:42 PM</span></div>
+      <div class="total-row"><span>TOTAL PAID</span><span><?= $totalAmount?></span></div>
+      <div class="row"><span class="label">Paid with</span><span><?= $paymentMethod ?></span></div>
+      <div class="row"><span class="label">Date</span><span><?= $paymentDate ?></span></div>
 
       <div class="qr-wrap">
         <svg class="qr" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
@@ -102,11 +102,11 @@
           </g>
         </svg>
       </div>
-      <div class="order-no">ORDER #EVT-2026-084213</div>
+      <div class="order-no"><?= $orderNumber?></div>
 
       <div class="foot">
         Bring this confirmation and a photo ID to entry.<br>
-        Questions? support@starlightsessions.com
+        Questions? konektemtv@gmail.com
       </div>
     </div>
   </div>
