@@ -22,9 +22,9 @@ class Database {
     protected static $sharedPdo = null; // Static shared connection
     protected static $sharedRedisClient = null;
     protected static $sharedStorePdo = null;
-    public PDO $pdo;
-    public PDO $storePdo;
-    public Client $redisClient;
+    public PDO | null $pdo;
+    public PDO | null $storePdo;
+    public Client | null $redisClient;
     private $lastConnectTime = 0;
     private $queryCount = 0;
     
