@@ -382,8 +382,8 @@ $livestream = function($req, $res) use($view){
 $payment = function($req, $res) use ($view){
     $context = [
         'scripts' => [
-            //getScript(BASE_URL . '/static/js/index-pSVdCgWl.js', ['type', 'crossorigin'], ['module', ''])
-            getScript(BASE_URL . '/static/js/index-0b102616.js', ['type', 'crossorigin'], ['module', ''])
+            getScript(BASE_URL . '/static/js/index-CBjQa9RL.js', ['type', 'crossorigin'], ['module', ''])
+            //getScript(BASE_URL . '/static/js/index-0b102616.js', ['type', 'crossorigin'], ['module', ''])
         ],
         'styles' => [
             BASE_URL . "/static/css/checkout.css"
