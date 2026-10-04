@@ -636,6 +636,10 @@ class PaymentApi {
                             Log::error("Failed to grant stream access: " . ($accessResult['message'] ?? 'Unknown error'));
                         }
                         break;
+                    case "event":
+                        $event = (new Konektem\Models\EventModel())->getEventById();
+                        $eventName = $event["name"];
+                        break;
                     default:
                         break;
                 }
