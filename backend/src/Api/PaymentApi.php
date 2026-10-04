@@ -637,13 +637,7 @@ class PaymentApi {
                         }
                         break;
                     case "event":
-                        $event = (new \Konektem\Models\EventsModel())->getEventById($item["id"]);
-                        $eventName = $event["title"];
-                        $eventMeta = "{$event["event_date"]},{$event['location']}\n";
-                        $paymentMethod = "moncash";
-                        $totalAmount = $amount;
-                        $paymentDate = $order['payment_date'];
-                        $orderNumber = $order['order_number'];
+                        (new \Konektem\Models\EventsModel())->sendTicket($order, $item['product_id']);
                         break;
                     default:
                         break;

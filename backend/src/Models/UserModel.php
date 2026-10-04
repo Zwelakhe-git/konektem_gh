@@ -212,7 +212,7 @@ class UserModel extends Database{
      * @param email - user's email
      * @return (id, name, email, avatar_url, role)
      */
-    public function getUserDetails($name, $email, $id=null) {
+    public function getUserDetails(string | null $name, string | null $email, string | int | null $id=null) {
         $user = null;
         try {
             if($this->redisClient){
@@ -220,7 +220,7 @@ class UserModel extends Database{
                     $key = "user:$id";
                     $data = $this->redisClient->get($key);
                     if($data){
-                        $data = json_decode($data, true);
+                        $user = json_decode($data, true);
                         Log::info("using cached user data");
                     }
                 } else {

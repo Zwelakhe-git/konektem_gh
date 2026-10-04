@@ -239,5 +239,36 @@ class EventsModel extends Database {
             Log::error("{$e->getMessage()} in {$e->getFile()} line {$e->getLine()}");
         }
     }
+
+    public function sendTicket($order, string | int $productId){
+        try {
+            $stmt = $this->pdo->prepare("SELECT * FROM events WHERE product_id = ?");
+            $stmt->execute([$productId]);
+            $event = $stmt->fetch();
+            if(!$event){ return; }
+            $eventName = $event["title"];
+            $eventMeta = "{$event["event_date"]},{$event['location']}\n";
+            $paymentMethod = $order['payment_method'];
+            $totalAmount = $order['total_amount'];
+            $paymentDate = $order['payment_date'];
+            $orderNumber = $order['order_number'];
+            $userInfo = (new \Konektem\Models\UserModel())->getUserDetails(null, null, $order['user_id']);
+
+            $email = new \Konektem\Models\EmailModel();
+            ob_start();
+            require_once(TEMPLATES_DIR . "/../Components/EventTicketReceipt.php");
+            $bodyHtml = ob_get_clean();
+            $subject = "Event ticket";
+            $toEmail = $userInfo['email'];
+            $toName = ($userInfo['name'] ?? $userInfo['first_name']) . ' ' . ($userInfo['last_name'] ?? '');
+            if (empty(trim($toName))) {
+                $toName = $userInfo['name'] ?? $userInfo['email'];
+            }
+            
+            $result = $email->prepare($subject, $toEmail, $toName, $bodyHtml, "")->send();
+        } catch(\Exception $e){
+            Log::error("", $e);
+        }
+    }
 }
 ?>
