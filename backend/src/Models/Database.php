@@ -40,7 +40,7 @@ class Database {
             self::$sharedPdo = $this->createConnection();
         }
         if (self::$sharedStorePdo === null){
-            self::$sharedStorePdo = $this->createConnection(STORE_DB_NAME);
+            //self::$sharedStorePdo = $this->createConnection(STORE_DB_NAME);
         }
         if(self::$sharedRedisClient === null){
             self::$sharedRedisClient = $this->createRedisConnection();
@@ -102,7 +102,7 @@ class Database {
             try {
                 //$client = new Redis();
                 //$client->connect(REDIS_HOST, REDIS_PORT);
-                $client = new Client(REDIS_URL);
+                $client = new Client(DEV_MODE ? REDIS_URL : UPSTASH_REDIS_URL);
                 $client->connect();
                 
                 if($client->isConnected()){

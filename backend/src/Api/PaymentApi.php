@@ -637,10 +637,10 @@ class PaymentApi {
                         }
                         break;
                     case "event":
-                        $event = (new Konektem\Models\EventsModel())->getEventById($item["id"]);
+                        $event = (new \Konektem\Models\EventsModel())->getEventById($item["id"]);
                         $eventName = $event["title"];
                         $eventMeta = "{$event["event_date"]},{$event['location']}\n";
-                        $paymentMethod "moncash";
+                        $paymentMethod = "moncash";
                         $totalAmount = $amount;
                         $paymentDate = $order['payment_date'];
                         $orderNumber = $order['order_number'];
