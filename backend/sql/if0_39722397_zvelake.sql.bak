@@ -5,15 +5,17 @@ SET time_zone = '+00:00';
 
 
 CREATE TABLE `admin_logs` (
-`id` bigint(20) UNSIGNED NOT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
   `admin_id` bigint(20) UNSIGNED NOT NULL,
   `action` varchar(100) NOT NULL,
   `data` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+
+
 CREATE TABLE `albums` (
-`id` bigint(20) UNSIGNED NOT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
   `name` varchar(255) NOT NULL,
   `image_url` varchar(255) DEFAULT NULL,
   `songs_count` int(11) DEFAULT NULL,
@@ -24,10 +26,12 @@ CREATE TABLE `albums` (
   `downloads` int(11) DEFAULT 0,
   `likes` int(11) DEFAULT 0,
   `shares` int(11) DEFAULT 0
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
 
 CREATE TABLE `api_keys` (
-`id` bigint(20) UNSIGNED NOT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
   `api_key` varchar(255) NOT NULL,
   `key_name` varchar(255) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT current_timestamp(),
@@ -38,13 +42,17 @@ CREATE TABLE `api_keys` (
   `permissions` set('read','write','delete','insert','update','create') NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
-CREATE TABLE `artists` (
-`id` bigint(20) UNSIGNED NOT NULL,
+
+
+CREATE TABLE `Artists` (
+  `id` bigint(20) UNSIGNED NOT NULL,
   `name` varchar(100) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
 
 CREATE TABLE `books` (
-`id` bigint(20) UNSIGNED NOT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
   `title` varchar(255) NOT NULL,
   `author` varchar(255) DEFAULT NULL,
   `release_date` date DEFAULT NULL,
@@ -53,27 +61,33 @@ CREATE TABLE `books` (
   `owner` varchar(100) DEFAULT 'admin@konektem.net',
   `cover_image` bigint(10) UNSIGNED DEFAULT NULL,
   `linked_images` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ;
+
+
 
 CREATE TABLE `clients` (
-`id` bigint(20) NOT NULL,
+  `id` bigint(20) NOT NULL,
   `first_name` varchar(100) NOT NULL,
   `last_name` varchar(100) NOT NULL,
   `email` varchar(255) NOT NULL,
   `phone` varchar(20) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
 
 CREATE TABLE `documents` (
-`id` bigint(20) UNSIGNED NOT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
   `title` varchar(255) NOT NULL,
   `slug` varchar(255) DEFAULT NULL,
   `content` longtext DEFAULT NULL,
   `content_json` longtext DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ;
+
+
 
 CREATE TABLE `document_categories` (
-`id` bigint(20) UNSIGNED NOT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
   `name` varchar(100) NOT NULL,
   `slug` varchar(100) DEFAULT NULL,
   `description` text DEFAULT NULL,
@@ -81,21 +95,27 @@ CREATE TABLE `document_categories` (
   `created_at` timestamp NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+
+
 CREATE TABLE `document_category_relations` (
-`document_id` bigint(20) UNSIGNED NOT NULL,
+  `document_id` bigint(20) UNSIGNED NOT NULL,
   `category_id` bigint(20) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+
+
 CREATE TABLE `document_images` (
-`id` bigint(20) UNSIGNED NOT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
   `document_id` bigint(20) UNSIGNED NOT NULL,
   `image_id` bigint(20) UNSIGNED NOT NULL,
   `order_no` int(11) DEFAULT 0,
   `created_at` timestamp NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+
+
 CREATE TABLE `events` (
-`id` bigint(20) UNSIGNED NOT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
   `title` varchar(200) DEFAULT NULL,
   `description` text DEFAULT NULL,
   `eventDate` date DEFAULT NULL,
@@ -114,20 +134,26 @@ CREATE TABLE `events` (
   `public` tinyint(1) DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+
+
 CREATE TABLE `example` (
-`id` bigint(20) UNSIGNED NOT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
   `name` varchar(10) DEFAULT NULL,
   `parent_id` bigint(20) UNSIGNED DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-CREATE TABLE `images` (
-`id` bigint(20) UNSIGNED NOT NULL,
+
+
+CREATE TABLE `Images` (
+  `id` bigint(20) UNSIGNED NOT NULL,
   `location` varchar(200) DEFAULT NULL,
   `mime_type` varchar(255) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
 
 CREATE TABLE `interview` (
-`id` int(11) NOT NULL,
+  `id` int(11) NOT NULL,
   `title` varchar(255) NOT NULL,
   `description` mediumtext DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT current_timestamp(),
@@ -145,10 +171,12 @@ CREATE TABLE `interview` (
   `guest_title` varchar(20) DEFAULT NULL,
   `duration` int(11) DEFAULT NULL,
   `interview_date` date DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
 
 CREATE TABLE `livestream` (
-`id` bigint(20) UNSIGNED NOT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
   `stream_date` datetime NOT NULL,
   `stream_title` mediumtext NOT NULL,
   `stream_key` varchar(50) NOT NULL,
@@ -156,23 +184,29 @@ CREATE TABLE `livestream` (
   `owner` varchar(255) NOT NULL DEFAULT 'admin@konektem.net'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
+
+
 CREATE TABLE `livestream_viewers` (
-`id` bigint(20) UNSIGNED NOT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
   `user_ids` text DEFAULT NULL,
   `stream_id` bigint(20) UNSIGNED DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+
+
 CREATE TABLE `mainpagecontent` (
-`id` bigint(20) UNSIGNED NOT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
   `newsSlide` bigint(20) UNSIGNED DEFAULT NULL,
   `fadeNews` bigint(20) UNSIGNED DEFAULT NULL,
   `music` bigint(20) UNSIGNED DEFAULT NULL,
   `events` bigint(20) DEFAULT NULL,
   `interviews` bigint(20) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+
 
 CREATE TABLE `music` (
-`artist_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `artist_id` bigint(20) UNSIGNED DEFAULT NULL,
   `id` bigint(20) UNSIGNED NOT NULL,
   `track_name` varchar(100) NOT NULL,
   `track_img_id` bigint(20) UNSIGNED DEFAULT NULL,
@@ -192,10 +226,12 @@ CREATE TABLE `music` (
   `title` varchar(255) DEFAULT NULL,
   `url` varchar(255) DEFAULT NULL,
   `public` tinyint(1) DEFAULT 1
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+
+
 
 CREATE TABLE `news` (
-`id` bigint(20) UNSIGNED NOT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
   `newsImg` bigint(20) UNSIGNED DEFAULT NULL,
   `newsTitle` varchar(150) DEFAULT NULL,
   `newsDate` date DEFAULT NULL,
@@ -213,19 +249,23 @@ CREATE TABLE `news` (
   `content` text DEFAULT NULL,
   `published_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT current_timestamp(),
-  `title_hash` CHAR(32),
+  `title_hash` char(32) GEN (md5(`title`)) STORED,
   `updated_at` timestamp NULL DEFAULT NULL,
   `author_id` bigint(20) UNSIGNED DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
 
 CREATE TABLE `news_categories` (
-`id` bigint(20) UNSIGNED NOT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
   `name` varchar(50) DEFAULT NULL,
   `display_text` varchar(50) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+
+
 CREATE TABLE `old_orders` (
-`id` bigint(20) UNSIGNED NOT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
   `client_id` bigint(20) NOT NULL,
   `total_amount` decimal(10,2) NOT NULL,
   `order_status` enum('pending','confirmed','cancelled','completed') DEFAULT 'pending',
@@ -238,8 +278,10 @@ CREATE TABLE `old_orders` (
   `owner` varchar(255) NOT NULL DEFAULT 'admin@konektem.net'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+
+
 CREATE TABLE `orders` (
-`id` bigint(20) UNSIGNED NOT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
   `user_id` bigint(20) UNSIGNED NOT NULL,
   `order_number` varchar(50) NOT NULL,
   `total_amount` decimal(10,2) NOT NULL,
@@ -256,8 +298,10 @@ CREATE TABLE `orders` (
   `payment_token` varchar(500) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+
+
 CREATE TABLE `order_items` (
-`id` bigint(20) UNSIGNED NOT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
   `order_id` bigint(20) UNSIGNED NOT NULL,
   `product_id` bigint(20) UNSIGNED NOT NULL,
   `quantity` int(11) NOT NULL DEFAULT 1,
@@ -267,8 +311,10 @@ CREATE TABLE `order_items` (
   `created_at` timestamp NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+
+
 CREATE TABLE `order_status_history` (
-`id` bigint(20) UNSIGNED NOT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
   `order_id` bigint(20) UNSIGNED NOT NULL,
   `old_status` varchar(50) DEFAULT NULL,
   `new_status` varchar(50) NOT NULL,
@@ -277,24 +323,30 @@ CREATE TABLE `order_status_history` (
   `created_at` timestamp NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+
+
 CREATE TABLE `partners` (
-`id` bigint(20) UNSIGNED NOT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
   `name` varchar(100) DEFAULT 'konktem_partner',
   `image_id` bigint(20) UNSIGNED DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
-CREATE TABLE `premiumsubscribers` (
-`id` bigint(20) UNSIGNED NOT NULL,
-  `user_id` bigint(20) UNSIGNED NOT NULL,
-  `date_start` date DEFAULT curdate(),
-  `date_end` date DEFAULT NULL,
-  `cancelled_at` date DEFAULT NULL,
-  `subscription_status` enum('active','cancelled','expired') DEFAULT 'active'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
+
+
+CREATE TABLE `PremiumSubscribers` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `user_id` bigint(20) UNSIGNED NOT NULL,
+  `date_start` date DEFAULT curdate(),
+  `date_end` date GEN (`date_start` + interval 1 week) STORED,
+  `cancelled_at` date DEFAULT NULL,
+  `subscription_status` enum('active','cancelled','expired') GEN (case when `cancelled_at` is not null then 'cancelled' when `date_end` < curdate() then 'expired' else 'active' end) VIRTUAL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+
 CREATE TABLE `products` (
-`id` bigint(20) UNSIGNED NOT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
   `product_type` enum('stream','service','event','premium_subscription') DEFAULT NULL,
   `name` varchar(255) NOT NULL,
   `description` text DEFAULT NULL,
@@ -304,8 +356,10 @@ CREATE TABLE `products` (
   `updated_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+
+
 CREATE TABLE `services` (
-`id` bigint(20) NOT NULL,
+  `id` bigint(20) NOT NULL,
   `name` varchar(50) DEFAULT NULL,
   `description` mediumtext DEFAULT NULL,
   `serviceImg` bigint(20) UNSIGNED DEFAULT NULL,
@@ -319,8 +373,10 @@ CREATE TABLE `services` (
   `requirements` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+
+
 CREATE TABLE `site_settings` (
-`id` int(11) NOT NULL,
+  `id` int(11) NOT NULL,
   `setting_key` varchar(100) NOT NULL,
   `setting_value` mediumtext DEFAULT NULL,
   `setting_type` varchar(20) DEFAULT 'text',
@@ -330,30 +386,38 @@ CREATE TABLE `site_settings` (
   `display_order` int(11) DEFAULT 0,
   `created_at` timestamp NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-CREATE TABLE `streamaccesskeys` (
-`id` bigint(20) UNSIGNED NOT NULL,
+
+
+CREATE TABLE `streamAccesskeys` (
+  `id` bigint(20) UNSIGNED NOT NULL,
   `access_key` varchar(50) DEFAULT NULL,
   `date_start` timestamp NOT NULL DEFAULT current_timestamp(),
   `date_end` timestamp NOT NULL DEFAULT (current_timestamp() + interval 1 month)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
+
+
 CREATE TABLE `streamer` (
-`id` bigint(20) UNSIGNED NOT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
   `name` varchar(20) NOT NULL,
   `stream_key_id` bigint(20) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
+
+
 CREATE TABLE `streamkey` (
-`id` bigint(20) UNSIGNED NOT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
   `stream_key` varchar(20) DEFAULT NULL,
   `date_start` timestamp NULL DEFAULT current_timestamp(),
   `date_end` timestamp NULL DEFAULT (current_timestamp() + interval 1 month)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
+
+
 CREATE TABLE `stream_access` (
-`id` bigint(20) UNSIGNED NOT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
   `user_id` bigint(20) UNSIGNED NOT NULL,
   `order_item_id` bigint(20) UNSIGNED NOT NULL,
   `access_token` varchar(255) NOT NULL,
@@ -363,8 +427,10 @@ CREATE TABLE `stream_access` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+
+
 CREATE TABLE `stream_details` (
-`product_id` bigint(20) UNSIGNED NOT NULL,
+  `product_id` bigint(20) UNSIGNED NOT NULL,
   `stream_url` varchar(500) DEFAULT NULL,
   `start_time` datetime NOT NULL,
   `end_time` datetime DEFAULT NULL,
@@ -373,34 +439,42 @@ CREATE TABLE `stream_details` (
   `cover_image` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+
+
 CREATE TABLE `subscriptions` (
-`id` bigint(20) UNSIGNED NOT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
   `user_id` bigint(10) UNSIGNED NOT NULL,
   `plan_id` bigint(10) UNSIGNED NOT NULL,
   `created_at` timestamp NULL DEFAULT current_timestamp(),
   `expire_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
 
 CREATE TABLE `subscription_plans` (
-`id` bigint(20) UNSIGNED NOT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
   `period` enum('monthly','yearly') DEFAULT 'monthly',
   `description` text DEFAULT NULL,
   `features` text DEFAULT NULL COMMENT 'json string',
   `price` int(11) NOT NULL DEFAULT 10,
   `currency` varchar(10) DEFAULT 'Dollars',
   `product_id` bigint(20) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
 
 CREATE TABLE `tickets` (
-`id` bigint(20) NOT NULL,
+  `id` bigint(20) NOT NULL,
   `order_id` bigint(20) NOT NULL,
   `ticket_number` varchar(50) NOT NULL,
   `status` enum('active','used','cancelled') DEFAULT 'active',
   `used_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
 
 CREATE TABLE `transactions` (
-`id` bigint(20) UNSIGNED NOT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
   `order_id` bigint(20) UNSIGNED NOT NULL,
   `transaction_id` varchar(255) NOT NULL,
   `amount` decimal(10,2) NOT NULL,
@@ -408,20 +482,24 @@ CREATE TABLE `transactions` (
   `status` enum('pending','completed','failed','refunded') DEFAULT 'pending',
   `payment_system` varchar(50) NOT NULL,
   `payment_details` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ;
 
-CREATE TABLE `useractivitylog` (
-`id` bigint(20) UNSIGNED NOT NULL,
+
+
+CREATE TABLE `UserActivityLog` (
+  `id` bigint(20) UNSIGNED NOT NULL,
   `activity_name` varchar(255) NOT NULL,
   `activity_date` timestamp NULL DEFAULT current_timestamp(),
   `item_name` varchar(50) NOT NULL,
   `item_id` int(11) NOT NULL,
   `user_id` bigint(20) UNSIGNED DEFAULT NULL,
   `username` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+
 
 CREATE TABLE `users` (
-`id` bigint(20) UNSIGNED NOT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
   `name` varchar(100) NOT NULL,
   `last_name` varchar(20) DEFAULT NULL,
   `email` varchar(50) DEFAULT NULL,
@@ -432,10 +510,12 @@ CREATE TABLE `users` (
   `role` enum('admin','guest') DEFAULT 'guest',
   `is_blocked` tinyint(1) DEFAULT 0,
   `last_login` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
-CREATE TABLE `videos` (
-`id` bigint(20) UNSIGNED NOT NULL,
+
+
+CREATE TABLE `Videos` (
+  `id` bigint(20) UNSIGNED NOT NULL,
   `vidImg` bigint(20) UNSIGNED DEFAULT NULL,
   `vidTitle` mediumtext DEFAULT NULL,
   `location` varchar(200) DEFAULT NULL,
@@ -443,11 +523,15 @@ CREATE TABLE `videos` (
   `likes` int(11) DEFAULT 0,
   `downloads` int(11) DEFAULT 0,
   `plays` int(11) DEFAULT 0
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
 
 CREATE TABLE `viewers` (
-`id` bigint(20) UNSIGNED NOT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
   `name` varchar(100) NOT NULL,
   `access_key_id` bigint(20) UNSIGNED NOT NULL,
   `password_hash` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+
+
