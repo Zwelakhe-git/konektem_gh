@@ -27,6 +27,7 @@ class NewsModel extends Database {
         'i.url AS image_url',
     ];
     private const string ARTICLES_REDIS_KEY_PATTERN = 'article:*';
+    private const int minCache = 100;
     private const array DEFAULT_AUTHOR_INFO = [
         'name' => 'Konektem.net',
         'avartar_url' => '/konektem/assets/images/logo.png',
@@ -47,9 +48,11 @@ class NewsModel extends Database {
                     try {
                         $article = json_decode($article, true);
                         $cached[] = $article;
-                    } catch(\Exception $e){}
+                    } catch(\Exception $e){
+                        Log::error("", $e);
+                    }
                 }
-                if(count($cached) > 0){
+                if(count($cached) >= self::minCache){
                     Log::info("articles cache hit: " . count($cached));
                     return $cached;
                 }
@@ -79,7 +82,7 @@ class NewsModel extends Database {
             if($this->redisClient){
                 $key = "article:{$article['id']}";
                 $this->redisClient->set($key, json_encode($article, JSON_UNESCAPED_UNICODE));
-                $this->redisClient-expire($key, 3600 * 24);
+                $this->redisClient->expire($key, 3600 * 24);
             }
         }
         return $articles;
@@ -115,7 +118,7 @@ class NewsModel extends Database {
             if($this->redisClient){
                 $key = "article:$id";
                 $this->redisClient->set($key, json_encode($article, JSON_UNESCAPED_UNICODE));
-                $this->redisClient-expire($key, 3600 * 24);
+                $this->redisClient->expire($key, 3600 * 24);
             }
             return $article;
         } catch(\PDOException $e){

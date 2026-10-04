@@ -65,8 +65,8 @@ class MainPageContentModel extends Database {
                 'interviews' => 25
             ];
             if(!isset($positions[$type])){
-                Log::warn("cannot remove $type from main page");
-                return;
+                Log::warn("cannot add $type to main page");
+                return false;
             }
             $position = $positions[$type];
             if($this->itemExists($position, $id)){
@@ -76,6 +76,7 @@ class MainPageContentModel extends Database {
 
             $stmt = $this->pdo->query("SELECT COUNT(`$position`) FROM mainpagecontent WHERE `$position` IS NOT NULL");
             if($limits[$type] >= 0 && $stmt->fetchColumn() >= $limits[$type]){
+                Log::warn("main page content for $type has reached maximum value");
                 return false;
             }
             

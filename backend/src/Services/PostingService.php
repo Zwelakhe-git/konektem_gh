@@ -58,7 +58,7 @@ class PostingService{
             $pdo->beginTransaction();
             $publishCount = 0;
             $updatedItems = [];
-            $hasPremiumSubscription = isset($this->userPayload['subscription']) && !empty($this->userPayload['subscription']);
+            $hasPremiumSubscription = isset($this->userPayload['subscription']) && !empty(json_decode($this->userPayload['subscription'], true));
             $mainPageAddCount = 0;
 
             // Map section to table name
@@ -108,6 +108,7 @@ class PostingService{
             }
 
             if($hasPremiumSubscription){
+                Log::info("user {$this->userPayload['id']} has premium. Adding content to main page:");
                 $mpModel = new \Konektem\Models\MainPageContentModel();
                 foreach($updatedItems as $section => $ids){
                     $position = $tableMap[$section];

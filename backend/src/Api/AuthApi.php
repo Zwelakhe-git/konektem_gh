@@ -196,17 +196,24 @@ class AuthApi{
                 'auth_provider' => 'google'
             ];
             $sessionUser['subscription'] = json_encode($sessionUser['subscription']);
+            
             $token = $auth->createJWTToken($sessionUser);
             $auth->login($sessionUser, $token);
+            Log::info("user logged in with google: " . print_r($_SESSION, true));
 
             //Log::info("User {$user['email']} authenticated via Google");
             
-            header("Location: " . $redirectUrl . "?" . http_build_query([
+            return $res->redirect($redirectUrl . "?" . http_build_query([
                 'google_success' => 1,
                 'token' => $token
             ]
             ));
-            exit;
+            // header("Location: " . $redirectUrl . "?" . http_build_query([
+            //     'google_success' => 1,
+            //     'token' => $token
+            // ]
+            // ));
+            // exit;
 
         } catch(\Exception $e) {
             Log::error("Google auth callback error: " . $e->getMessage());

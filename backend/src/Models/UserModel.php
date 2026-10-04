@@ -240,22 +240,25 @@ class UserModel extends Database{
                 }
             }
             if(!$user){
-                $sql = "SELECT id, name, email, avatar_url, role FROM users WHERE ";
+                $sql = "SELECT id, name, email, avatar_url, role, is_blocked, google_id FROM users WHERE ";
                 $sql .= $id ? "id = ?" : "name = ? AND email = ? LIMIT 1";
                 $stmt = $this->pdo->prepare($sql);
                 $stmt->execute($id ? [$id] : [$name, $email]);
                 $user = $stmt->fetch();
 
-                if(!$user || empty($user)) return [];
+                if(!$user || empty($user)){
+                    Log::info("user details: user not found");
+                    return [];
+                };
                 
                 $sql = "SELECT s.*, CASE 
-                    WHEN expire_at IS NULL THEN 'active'
-                    WHEN expire_at > NOW() THEN 'active' 
+                    WHEN s.expire_at IS NULL THEN 'active'
+                    WHEN s.expire_at > NOW() THEN 'active' 
                     ELSE 'expired' 
                 END AS status
                 FROM subscriptions s
                 LEFT JOIN subscription_plans sp ON s.plan_id = sp.id
-                WHERE s.user_id = ? AND expire_at > NOW() ORDER BY created_at DESC LIMIT 1";
+                WHERE s.user_id = ? AND (s.expire_at > NOW() OR s.expire_at IS NULL) ORDER BY created_at DESC LIMIT 1";
                 $stmt = $this->pdo->prepare($sql);
                 $stmt->execute([$user['id']]);
 
@@ -356,10 +359,14 @@ class UserModel extends Database{
      */
     public function getUserByEmail($email) {
         try {
-            $sql = "SELECT id, name, email, avatar_url, role, is_blocked, google_id FROM users WHERE email = ? LIMIT 1";
+            $sql = "SELECT id FROM users WHERE email = ? LIMIT 1";
             $stmt = $this->pdo->prepare($sql);
             $stmt->execute([$email]);
             $user = $stmt->fetch();
+            if($user && !empty($user)) {
+                Log::info("user found by email");
+                $user = $this->getUserDetails(null, null, $user['id']);
+            }
             
             return $user ?: null;
         } catch(\PDOException $e) {
