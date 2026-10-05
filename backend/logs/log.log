@@ -31,3 +31,19 @@
 Stack trace:
 #0 {main}
   thrown in /var/www/html/konektem/konektem_gh/index.php on line 7
+2026-10-04 16:38:09 [INFO] Database connection established successfully
+2026-10-04 16:38:09 [ERROR] Database connection attempt 1 failed: SQLSTATE[HY000] [1044] Access denied for user 'if0_39722397'@'%' to database 'if0_39722397_konektem_store'
+2026-10-04 16:38:10 [ERROR] Database connection attempt 2 failed: SQLSTATE[HY000] [1044] Access denied for user 'if0_39722397'@'%' to database 'if0_39722397_konektem_store'
+2026-10-04 16:38:10 [ERROR] CRITICAL DB ERROR: SQLSTATE[HY000] [1044] Access denied for user 'if0_39722397'@'%' to database 'if0_39722397_konektem_store'
+2026-10-04 16:38:10 [WARNING] Service Temporarily Unavailable
+2026-10-04 16:38:10 [WARNING] The database is currently experiencing high load. Please try again in a few moments.
+2026-10-04 16:40:34 [INFO] Database connection established successfully
+2026-10-04 16:40:34 [INFO] Redis connection established successfully
+2026-10-04 16:40:34 [ERROR] Cannot assign null to property Konektem\Models\Database::$storePdo of type PDO in /var/www/html/backend/src/Models/Database.php line 49
+2026-10-04 16:43:45 [INFO] Database connection established successfully
+2026-10-04 16:43:45 [INFO] Redis connection established successfully
+2026-10-04 16:43:45 [ERROR] WARNING [2] file_get_contents(/var/www/html/.env): Failed to open stream: No such file or directory at /var/www/html/vendor/vlucas/phpdotenv/src/Store/File/Reader.php line 73
+2026-10-04 16:43:45 [ERROR] Unable to read any of the environment file(s) at [/var/www/html/.env]. in /var/www/html/vendor/vlucas/phpdotenv/src/Store/FileStore.php line 68
+2026-10-04 16:46:44 [INFO] Database connection established successfully
+2026-10-04 16:46:44 [INFO] Redis connection established successfully
+2026-10-04 16:46:44 [ERROR] SQLSTATE[42S02]: Base table or view not found: 1146 Table 'if0_39722397_zvelake.news' doesn't exist in /var/www/html/backend/src/Models/NewsModel.php line 62
