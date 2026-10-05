@@ -1,8 +1,5 @@
 SET SQL_MODE = 'NO_AUTO_VALUE_ON_ZERO';
-
 SET time_zone = '+00:00';
-
-
 
 CREATE TABLE `admin_logs` (
 `id` bigint(20) UNSIGNED NOT NULL,
@@ -52,7 +49,14 @@ CREATE TABLE `books` (
   `pdfUrl` varchar(255) DEFAULT NULL,
   `owner` varchar(100) DEFAULT 'admin@konektem.net',
   `cover_image` bigint(10) UNSIGNED DEFAULT NULL,
-  `linked_images` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL
+  `linked_images` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
+  `description` text DEFAULT NULL,
+  `likes` int(11) DEFAULT 0,
+  `shares` int(11) DEFAULT 0,
+  `views` int(11) DEFAULT 0,
+  `genre` varchar(255) DEFAULT NULL,
+  `downloads` int(11) DEFAULT 0,
+  `public` tinyint(1) DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE `clients` (
@@ -287,7 +291,7 @@ CREATE TABLE `partners` (
 CREATE TABLE `premiumsubscribers` (
 `id` bigint(20) UNSIGNED NOT NULL,
   `user_id` bigint(20) UNSIGNED NOT NULL,
-  `date_start` date DEFAULT (CURRENT_DATE),
+  `date_start` date DEFAULT NULL,
   `date_end` date DEFAULT NULL,
   `cancelled_at` date DEFAULT NULL,
   `subscription_status` enum('active','cancelled','expired') DEFAULT 'active'
@@ -407,7 +411,9 @@ CREATE TABLE `transactions` (
   `currency` varchar(3) DEFAULT 'USD',
   `status` enum('pending','completed','failed','refunded') DEFAULT 'pending',
   `payment_system` varchar(50) NOT NULL,
-  `payment_details` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL
+  `payment_details` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE `useractivitylog` (
