@@ -287,7 +287,7 @@ CREATE TABLE `partners` (
 CREATE TABLE `premiumsubscribers` (
 `id` bigint(20) UNSIGNED NOT NULL,
   `user_id` bigint(20) UNSIGNED NOT NULL,
-  `date_start` date DEFAULT curdate(),
+  `date_start` date DEFAULT (CURRENT_DATE),
   `date_end` date DEFAULT NULL,
   `cancelled_at` date DEFAULT NULL,
   `subscription_status` enum('active','cancelled','expired') DEFAULT 'active'
