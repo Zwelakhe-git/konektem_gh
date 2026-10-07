@@ -1,4 +1,8 @@
 <?php
+if(!file_exists(__DIR__ . "/src/Models/EmailModel.php")){
+    echo "email model file not found";
+    die();
+}
 require_once __DIR__ . "/src/Models/EmailModel.php";
 $host = "100.72.158.117";
 $dbName = "if0_39722397_zvelake";
@@ -15,7 +19,7 @@ $order = $stmt->fetch();
 $stmt = $pdo->query("SELECT id FROM products WHERE product_type = 'event'");
 $productId = $stmt->fetchColumn();
 
-$stmt = $this->pdo->prepare("SELECT * FROM events WHERE product_id = ?");
+$stmt = $pdo->prepare("SELECT * FROM events WHERE product_id = ?");
 $stmt->execute([$productId]);
 $event = $stmt->fetch();
 if(!$event){ return; }
