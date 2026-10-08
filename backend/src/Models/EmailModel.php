@@ -248,6 +248,10 @@ class EmailModel {
             HTDOCS . '/media/images/' . $cid . '.jpeg',
             HTDOCS . '/media/images/' . $cid . '.gif',
             HTDOCS . '/uploads/' . $cid,
+            HTDOCS . '/assets/' . $cid . '.png',
+            HTDOCS . '/assets/' . $cid . '.jpg',
+            HTDOCS . '/assets/' . $cid . '.jpeg',
+            HTDOCS . '/assets/' . $cid . '.gif',
         ];
         
         foreach ($possiblePaths as $path) {
