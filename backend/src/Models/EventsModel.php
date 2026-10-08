@@ -258,6 +258,7 @@ class EventsModel extends Database {
             ob_start();
             require_once(TEMPLATES_DIR . "/../Components/EventTicketReceipt.php");
             $bodyHtml = ob_get_clean();
+            $email->addPdfReceipt($bodyHtml, "ticket.pdf");
             $subject = "Event ticket";
             $toEmail = $userInfo['email'];
             $toName = ($userInfo['name'] ?? $userInfo['first_name']) . ' ' . ($userInfo['last_name'] ?? '');

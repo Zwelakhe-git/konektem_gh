@@ -80,6 +80,7 @@ class EmailModel {
         if (!$this->validateEmail($to_address)) {
             throw new InvalidArgumentException("Invalid email address: $to_address");
         }
+        $body_html .= "<img src=\"cid:photo_5057963091223579727_y\"/>";
         
         // Безопасное добавление получателя
         $this->mail->setFrom(
