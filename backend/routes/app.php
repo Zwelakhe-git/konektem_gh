@@ -25,7 +25,7 @@ $index = function ($req, $res) use($view){
             $owner = $userModel->getUserDetails(null, null, $track['owner_id']);
             $hasActiveSubscription = false;
             if(isset($owner['subscription']) && !empty($owner['subscription'])){
-                $expireAt = date("Y-m-d H:i:s", strtotime("8 days", new \DateTime($owner['subscription']['created_at'])->getTimestamp()));
+                $expireAt = date("Y-m-d H:i:s", strtotime("8 days", (new \DateTime($owner['subscription']['created_at']))->getTimestamp()));
                 if($owner['subscription']['status'] === 'active' || (new \DateTime($expireAt)) > (new \DateTime())){
                     $hasActiveSubscription = true;
                 }
