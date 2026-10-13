@@ -124,6 +124,9 @@
                 <label for="publish-inp">publish</label>
                 <p class="input-hint bold">(make available to the public)</p>
             </div>
+            <?php if(isset($_SESSION['user']['subscription']) && !empty($_SESSION['user']['subscription'])):?>
+            <div id="forma-9b7c7895-dc9e-45ae-b973-4402d871324b" class="rectangle" aria-label="Rectangle"><strong>Publishing uses current subscription</strong></div>
+            <?php endif;?>
         </div>
     </div>
     

@@ -26,3 +26,11 @@
 .checkbox.checked .checkbox-fill{
   background: var(--checkbox-color);
 }
+#forma-9b7c7895-dc9e-45ae-b973-4402d871324b {
+  padding: 5px;
+  background:#ffffff;
+  border-radius:6px;
+  border:3px solid #b31515;
+  width: fit-content;font-size: 18px;
+  color: #c22929;
+}
