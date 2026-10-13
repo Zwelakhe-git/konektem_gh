@@ -17,8 +17,8 @@ class MusicModel extends Database {
         'title',
         ''
     ];
-    private static const REDIS_KEY_PREFIX = "tracks";
-    private static const TTL = 3600 * 24;
+    private const REDIS_KEY_PREFIX = "tracks";
+    private const TTL = 3600 * 24;
     public function __construct(){
         parent::__construct();
         $this->mainpagemodel = new MainPageContentModel();
