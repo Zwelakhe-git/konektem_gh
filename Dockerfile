@@ -30,7 +30,8 @@ COPY ./.htaccess /var/www/html/
 
 RUN chown -R www-data:www-data /var/www/html \
     && chmod -R 755 /var/www/html/storage 2>/dev/null || true \
-    && chmod -R 755 /var/www/html/bootstrap/cache 2>/dev/null || true
+    && chmod -R 755 /var/www/html/bootstrap/cache 2>/dev/null || true \
+    && chmod -R 777 /var/www/html/backend/logs
 
     
 EXPOSE 80
