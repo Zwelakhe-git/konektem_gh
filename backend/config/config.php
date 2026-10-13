@@ -23,6 +23,7 @@ define('OS_PN_APP_ID', '');
 define('BASE_URL', '');
 define('LOG_FILE', __DIR__ . '/../logs/log.log');
 define('DEV_MODE', true);
+define('PREMIUM_SUBSCRIPTION_DURATION_DAYS', '8');
 
 define("TINY_API", "g23kch440bemtvvaejf63nukznpuwd12l7nk7whkpijtejvc");
 

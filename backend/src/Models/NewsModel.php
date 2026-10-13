@@ -10,7 +10,7 @@ use Konektem\Utils\Log;
 Log::init();
 class NewsModel extends Database {
     private $mainpagemodel;
-    private const array ARTICLE_COLUMNS = [
+    private const ARTICLE_COLUMNS = [
         'n.id',
         'n.title',
         'n.title_hash',
@@ -26,9 +26,9 @@ class NewsModel extends Database {
         'n.image_id',
         'i.url AS image_url',
     ];
-    private const string ARTICLES_REDIS_KEY_PATTERN = 'article:*';
-    private const int minCache = 100;
-    private const array DEFAULT_AUTHOR_INFO = [
+    private const ARTICLES_REDIS_KEY_PATTERN = 'article:*';
+    private const minCache = 100;
+    private const DEFAULT_AUTHOR_INFO = [
         'name' => 'Konektem.net',
         'avartar_url' => '/konektem/assets/images/logo.png',
         'email' => 'konektem@gmail.com'

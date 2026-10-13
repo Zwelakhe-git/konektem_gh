@@ -202,24 +202,24 @@ class AdminModel extends Database {
                 if($planId < 0){
                     return ['success' => false, 'message' => 'Invalid plan id'];
                 }
-                $sql = "INSERT INTO subscriptions (user_id, plan_id) VALUES (?,?)";
+                $sql = "INSERT INTO subscriptions (user_id, plan_id, expire_at) VALUES (?,?,?)";
                 $stmt = $this->pdo->prepare($sql);
-                $result = $stmt->execute([$user_id, $planId]);
+                $result = $stmt->execute([$user_id, $planId, date('Y-m-d H:i:s', strtotime(PREMIUM_SUBSCRIPTION_DURATION_DAYS . " days"))]);
                 
                 $this->pdo->commit();
                 $userInfo = (new UserModel())->getUserDetails(null, null, $user_id);
                 $this->sendPremiumSubscriptionEmail($userInfo);
                 return ['success' => true, 'message' => "user $user_id now has premium access"];
             }
-            $this->pdo->rollback();
+            $this->pdo->rollBack();
             return ["success" => false, "message" => "subscription active"];
             
         } catch(\PDOException $e){
-            $this->pdo->rollback();
+            $this->pdo->rollBack();
             Log::error("{$e->getMessage()} in {$e->getFile()} line {$e->getLine()}");
             return ["success" => false, "message" => "Server error"];
         } catch(\Exception $e){
-            $this->pdo->rollback();
+            $this->pdo->rollBack();
             Log::error("{$e->getMessage()} in {$e->getFile()} line {$e->getLine()}");
             return ["success"=> false, "message"=> "Server error"];
         }

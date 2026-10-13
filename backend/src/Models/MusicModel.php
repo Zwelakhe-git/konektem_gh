@@ -17,6 +17,8 @@ class MusicModel extends Database {
         'title',
         ''
     ];
+    private static const REDIS_KEY_PREFIX = "tracks";
+    private static const TTL = 3600 * 24;
     public function __construct(){
         parent::__construct();
         $this->mainpagemodel = new MainPageContentModel();
@@ -24,7 +26,7 @@ class MusicModel extends Database {
     public function getAllMusic() {
         try{
             $query = "
-                SELECT m.*, a.name as artist_name, i.url as image_url,
+                SELECT m.*, u.id AS owner_id, a.name as artist_name, i.url as image_url,
                 CASE
                     WHEN m.id IN (SELECT music FROM mainpagecontent) THEN 'mainpage'
                     ELSE 'no_pos'
@@ -32,12 +34,13 @@ class MusicModel extends Database {
                 FROM music m 
                 LEFT JOIN artists a ON m.artist_id = a.id 
                 LEFT JOIN images i ON m.image_id = i.id
+                LEFT JOIN users u ON m.owner = u.name
                 ORDER BY order_no ASC
             ";
             $stmt = $this->pdo->query($query);
             //Log::info("query executed without errors");
             return $stmt->fetchAll();
-        } catch(PDOException $e){
+        } catch(\PDOException $e){
             Log::error("MusicModel - getAllMusic - {$e->getMessage()}");
             return [];
         }
@@ -61,7 +64,7 @@ class MusicModel extends Database {
             $stmt = $this->pdo->prepare($sql);
             $stmt->execute([$owner]);
             return $stmt->fetchAll();
-        } catch(Exception $e){
+        } catch(\Exception $e){
             Log::error("{$e->getMessage()} in {$e->getFile()} line {$e->getLine()}");
             return [];
         }
@@ -74,10 +77,12 @@ class MusicModel extends Database {
             if(isset($data['album_id']) && !empty($data['album_id'])){
                 $columns[] = 'album_id';
             }
+            
+            $values = array_map(fn($col) => $data[$col], $columns);
             if(isset($data['public'])){
-                $columns[] = 'public';
-            }
-            $values = array_map(fn($col) => $data[$col], $columns);/*[
+                $columns[] = 'public';$values[] = $data['public'];
+                //$columns[] = 'published_at';$values[] = 'NOW()';
+            }/*[
                 $data['title'],
                 $data['artist_id'],
                 $data['image_id'],
@@ -142,7 +147,20 @@ class MusicModel extends Database {
 
     public function getTrackById($id){
         try {
-            $stmt = $this->pdo->prepare("SELECT m.*, a.name as artist_name, im.url as image_url,
+            $cached = null;
+            $key = self::REDIS_KEY_PREFIX . ":$id";
+            if($this->redisClient){
+                
+                $track = $this->redisClient->get($key);
+                if($track){
+                    $cached = json_decode($track, true);
+                    $this->redisClient->expire($key, self::TTL);
+                }
+            }
+            if($cached) {
+                return $cached;
+            }
+            $stmt = $this->pdo->prepare("SELECT m.*, u.id AS owner_id, a.name as artist_name, im.url as image_url,
             CASE
                     WHEN m.id IN (SELECT music FROM mainpagecontent) THEN 'mainpage'
                     ELSE 'no_pos'
@@ -150,9 +168,15 @@ class MusicModel extends Database {
             FROM music m
             LEFT JOIN artists a ON a.id = m.artist_id
             LEFT JOIN images im ON im.id = m.image_id
+            LEFT JOIN users u ON u.name = m.owner
             WHERE m.id = ?");
             $stmt->execute([$id]);
-            return $stmt->fetch();
+            $track = $stmt->fetch();
+            if($this->redisClient){
+                $this->redisClient->set($key, json_encode($track, JSON_UNESCAPED_UNICODE));
+                $this->redisClient->expire($key, self::TTL);
+            }
+            return $track;
         } catch(\Exception $e){
             Log::error("{$e->getMessage()} in {$e->getFile()} line {$e->getLine()}");
             return null;

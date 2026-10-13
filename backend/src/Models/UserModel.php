@@ -231,7 +231,7 @@ class UserModel extends Database{
                             $data = $this->redisClient->get($keys[$i]);
                             $data = json_decode($data, true);
                             if($data['email'] === $email){
-                                $cached = $data;
+                                $user = $data;
                                 $this->redisClient->expire($keys[$i], 3600);
                                 break;
                             }
@@ -258,7 +258,7 @@ class UserModel extends Database{
                 END AS status
                 FROM subscriptions s
                 LEFT JOIN subscription_plans sp ON s.plan_id = sp.id
-                WHERE s.user_id = ? AND (s.expire_at > NOW() OR s.expire_at IS NULL) ORDER BY created_at DESC LIMIT 1";
+                WHERE s.user_id = ? AND (s.expire_at > NOW() OR s.expire_at IS NULL) ORDER BY s.created_at DESC LIMIT 1";
                 $stmt = $this->pdo->prepare($sql);
                 $stmt->execute([$user['id']]);
 

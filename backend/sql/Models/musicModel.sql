@@ -18,4 +18,4 @@ CREATE TABLE `music` (
   `public` boolean DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
-ALTER TABLE music ADD `public` boolean DEFAULT 1;
+ALTER TABLE music ADD `public` boolean DEFAULT 1, ADD `published_at` TIMESTAMP DEFAULT NULL;

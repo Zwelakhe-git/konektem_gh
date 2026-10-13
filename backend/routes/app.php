@@ -20,7 +20,18 @@ $index = function ($req, $res) use($view){
             //getScript(BASE_URL . '/static/js/main-page-script.js', ['type'], ['module'])
         ];
         $data = $controller->index();
-        $data['music'] = array_values(array_filter($data['music'], fn($track) => $track['public']));
+        $userModel = new \Konektem\Models\UserModel();
+        $data['music'] = array_values(array_filter($data['music'], function($track) use($userModel){
+            $owner = $userModel->getUserDetails(null, null, $track['owner_id']);
+            $hasActiveSubscription = false;
+            if(isset($owner['subscription']) && !empty($owner['subscription'])){
+                $expireAt = date("Y-m-d H:i:s", strtotime("8 days", new \DateTime($owner['subscription']['created_at'])->getTimestamp()));
+                if($owner['subscription']['status'] === 'active' || (new \DateTime($expireAt)) > (new \DateTime())){
+                    $hasActiveSubscription = true;
+                }
+            }
+            return $track['public'] && ($hasActiveSubscription || $owner['role'] === 'admin');
+        }));
         $data['events'] = array_values(array_filter($data['events'], fn($event) => $event['public']));
         $data['books'] = array_values(array_filter($data['books'], fn($book) => $book['public']));
         $data['siteSettings'] = (new \Konektem\Models\SiteSettingsModel())->normalise($data['siteSettings']);
