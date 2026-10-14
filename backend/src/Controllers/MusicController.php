@@ -102,6 +102,10 @@ class MusicController {
             ];
             if(isset($_POST['public'])){
                 $data['public'] = $_POST['public'];
+                $sub = json_decode($_SESSION['user']['subscription'], true);
+                if(!empty($sub)){
+                    (new \Konektem\Models\AdminModel())->terminateUserSubscription($_SESSION['user']['id'], $sub['id']);
+                }
             }
             if(isset($_POST["position"])){
                 $data['position'] = $_POST['position'];
