@@ -116,6 +116,8 @@ class PostingService{
                         $mainPageAddCount += $mpModel->addItem($position, $id) ? 1 : 0;
                     }
                 }
+                $sub = json_decode($this->userPayload['subscription'], true);
+                (new \Konektem\Models\AdminModel())->terminateUserSubscription($this->userPayload['id'], $sub['id']);
                 
             }
             $pdo->commit();

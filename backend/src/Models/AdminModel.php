@@ -519,6 +519,16 @@ class AdminModel extends Database {
             return false;
         }
     }
+
+    public function terminateUserSubscription($uid, $subId){
+        try {
+            $stmt = $this->pdo->prepare("UPDATE subscriptions SET expire_at = NOW() WHERE id = ? AND user_id = ?");
+            $stmt->execute([$subId, $uid]);
+        } catch(\Exception $e){
+            Log::error('', $e);
+        }
+    }
+
     public function blockUser($name, $email, $id=null){}
 
     public function cacheUser(array $payload){
