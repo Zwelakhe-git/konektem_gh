@@ -433,6 +433,11 @@
   color: white;
 }
 
+#premiumBtn.disabled,
+#premiumBtn .inner:disabled{
+    opacity: 0.4;
+}
+
 * {
   box-sizing: border-box;
 }
