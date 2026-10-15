@@ -42,9 +42,9 @@ const modalHtml = () => {
                 </button>
             </div>
             ` : `<div id="premiumPublishBtn" class="container h-fit w-fit" aria-label="Layout container">
-      <div id="forma-621855c2-47bf-455e-821e-3e5438241c38" class="rectangle" aria-label="Rectangle">
+      <button id="forma-621855c2-47bf-455e-821e-3e5438241c38" class="rectangle" aria-label="Rectangle" disabled>
         publish to main page
-      </div>
+      </button>
         </div>`
             }
             <button class="btn-secondary-outline" id="clearSelectionBtn">
@@ -78,6 +78,7 @@ function openModal(){
         const itemsGrid = document.getElementById('itemsGrid');
         const sectionTabs = document.getElementById('sectionTabs');
         const publishBtn = document.getElementById('publishBtn');
+        const premiumPublishBtn = document.getElementById('premiumPublishBtn');
         const clearBtn = document.getElementById('clearSelectionBtn');
         const selectedCountDisplay = document.getElementById('selectedCountDisplay');
 
@@ -95,6 +96,10 @@ function openModal(){
 
         // ---------- fetch from API ----------
         async function fetchSection(section) {
+            if(sessionStorage.getItem(`item_select_${section}`)){
+                allItems[section] = JSON.parse(sessionStorage.getItem(`item_select_${section}`));
+                return;
+            }
             isLoading = true;
             itemsGrid.innerHTML = `<div class="section-loading"><i class="fas fa-spinner fa-spin"></i> loading ${section}...</div>`;
 
@@ -115,6 +120,7 @@ function openModal(){
                     return;
                 }
                 if (result.success) {
+                    sessionStorage.setItem(`item_select_${section}`, JSON.stringify(result.data));
                     allItems[section] = result.data;
                     renderItems(section);
                 } else {
