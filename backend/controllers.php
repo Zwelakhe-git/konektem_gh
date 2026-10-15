@@ -50,6 +50,7 @@ $profile = function($req, $res) use ($view){
         }
         $logMsg = "measuring login time: ";
         $start = date("H:i:s");
+        $logMsg .= "\nStart: $start\n";
         //Log::info("profile method called");
         $allowedActions = ['edit', 'create', 'list', 'preview'];
         $controller = new \Konektem\Controllers\AdminController();
@@ -262,11 +263,13 @@ $profile = function($req, $res) use ($view){
 
         $context['template'] = $template;
         $end = date("H:i:s");
-        $logMsg .= "end: $end";
+        $logMsg .= "end: $end\n";
         $logMsg .= "ellapsed: " . date_diff(new DateTime($start), new DateTime($end))->format("%H hrs, %I min, %S s");
         Log::info($logMsg);
         
-        return $res->send($view->render(TEMPLATES_DIR . "/$dir/layout/layout", $context));
+        $page = $view->render(TEMPLATES_DIR . "/$dir/layout/layout", $context);
+        Log::info("page size: " . strlen($page));
+        return $res->send($page);
     } catch(\Exception $e){
         Log::error("{$e->getMessage()} in {$e->getFile()} line {$e->getLine()}");
         return $res->redirect(BASE_URL . '/error/500');

@@ -80,7 +80,7 @@ class AdminController {
             if($_SERVER['REQUEST_METHOD'] === 'POST'){
                 $logMsg = "measuring login time: ";
                 $start = date("H:i:s");
-                $logMsg .= "\nStart: $start";
+                $logMsg .= "\nStart: $start\n";
                 if ($this->auth->isLoggedIn($role)){
                     $this->auth->checkSessionTimeout();
                     $end = date("H:i:s");
