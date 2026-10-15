@@ -35,18 +35,11 @@ const modalHtml = () => {
 
         <!-- footer -->
         <div class="modal-footer-custom">
-            ${!hasActiveSubscription ? `
-            <div id="premiumBtn" onclick="location.href='/premium-subscription'">
-                <button class="btn-secondary-outline inner border-0" >
-                <i class="fas fa-crown"></i> Premium
+            <div id="premiumBtn">
+                <button class="btn-secondary-outline inner border-0" disabled>
+                <i class="fas fa-crown"></i> Boost
                 </button>
             </div>
-            ` : `<div id="premiumPublishBtn" class="h-fit w-fit" aria-label="Layout container">
-      <button id="forma-621855c2-47bf-455e-821e-3e5438241c38" class="rectangle" aria-label="Rectangle" disabled>
-        publish to main page
-      </button>
-        </div>`
-            }
             <button class="btn-secondary-outline" id="clearSelectionBtn">
                 <i class="fas fa-times"></i> Clear
             </button>
@@ -78,7 +71,7 @@ function openModal(){
         const itemsGrid = document.getElementById('itemsGrid');
         const sectionTabs = document.getElementById('sectionTabs');
         const publishBtn = document.getElementById('publishBtn');
-        const premiumPublishBtn = document.getElementById('premiumPublishBtn');
+        const premiumBtn = document.querySelector('#premiumBtn button');
         const clearBtn = document.getElementById('clearSelectionBtn');
         const selectedCountDisplay = document.getElementById('selectedCountDisplay');
 
@@ -250,7 +243,7 @@ function openModal(){
             selectedCountDisplay.textContent = count;
             publishBtn.disabled = count === 0;
             if(hasActiveSubscription){
-                premiumPublishBtn.disabled = count === 0 || count > 1;
+                premiumBtn.disabled = count === 0 || count > 1;
             }
             if (count > 0) {
                 publishBtn.innerHTML = `<i class="fas fa-rocket"></i> Publish (${count})`;
@@ -391,9 +384,10 @@ function openModal(){
             }
         });
 
-        premiumPublishBtn?.addEventListener('click', async () => {
-            if(premiumPublishBtn.disabled) return;
+        premiumBtn?.addEventListener('click', async () => {
+            if(premiumBtn.disabled) return;
             try {
+                premiumBtn.disabled = true;
                 const selected = [];
             
                 // gather selected items from all sections
@@ -414,8 +408,7 @@ function openModal(){
             } catch(e){
                 console.error(e);
             } finally {
-                premiumPublishBtn.innerHTML = buttonContent;
-                premiumPublishBtn.disabled = false;
+                premiumBtn.disabled = false;
             }
         })
 
