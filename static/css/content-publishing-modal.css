@@ -433,6 +433,37 @@
   color: white;
 }
 
+* {
+  box-sizing: border-box;
+}
+
+.h-fit {
+  height: fit-content;
+}
+
+.w-fit {
+  width: fit-content;
+}
+
+#premiumPublishBtn {
+  height: 59px;
+  background: conic-gradient(from var(--angle), #ff6b6b, #4ecdc4, #45b7d1, #ff6b6b);
+  animation: rotate 1s linear infinite;
+  border-radius: 35px;
+  gap: 12px;
+  padding: 5px;
+}
+
+#forma-621855c2-47bf-455e-821e-3e5438241c38 {
+  height: 49px;
+  background: #1a1a2e;
+  border-radius: 35px;
+  align-content: center;
+  padding: 5px;
+  color: white;
+  font-size: 18px;
+}
+
 @keyframes rotate {
   to {
     --angle: 360deg;
