@@ -15,6 +15,10 @@ use PDO;
 use Predis\Client;
 use Predis\Connection\ConnectionException;
 use Konektem\Utils\Log;
+use Dotenv\Dotenv;
+
+$dotenv = Dotenv::createImmutable(BASE_DIR, '.env');
+$dotenv->load();
 
 
 Log::init();
@@ -55,9 +59,9 @@ class Database {
         while ($retryCount <= self::MAX_RETRIES){
             try {
                 $pdo = new PDO(
-                    "mysql:host=" . DB_HOST . ";dbname=" . $dbName . ";charset=utf8mb4",
-                    DB_USER, 
-                    DB_PASS,
+                    "mysql:host=" . ($_ENV['DB_HOST'] ?? DB_HOST) . ";dbname=" . $dbName . ";charset=utf8mb4",
+                    $_ENV['DB_USER'] ?? DB_USER, 
+                    $_ENV['DB_PASS'] ?? DB_PASS,
                     [
                         PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8mb4",
                         PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
@@ -102,7 +106,7 @@ class Database {
             try {
                 //$client = new Redis();
                 //$client->connect(REDIS_HOST, REDIS_PORT);
-                $client = new Client(DEV_MODE ? REDIS_URL : UPSTASH_REDIS_URL);
+                $client = new Client(DEV_MODE ? ($_ENV['REDIS_URL'] ?? REDIS_URL) : ($_ENV['UPSTASH_REDIS_URL'] ?? UPSTASH_REDIS_URL));
                 $client->connect();
                 
                 if($client->isConnected()){
