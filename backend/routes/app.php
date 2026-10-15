@@ -23,6 +23,7 @@ $index = function ($req, $res) use($view){
         $userModel = new \Konektem\Models\UserModel();
         $data['music'] = array_values(array_filter($data['music'], function($track) use($userModel){
             $owner = $userModel->getUserDetails(null, null, $track['owner_id']);
+            if(!$owner) return false;
             $hasActiveSubscription = false;
             if(isset($owner['subscription']) && !empty($owner['subscription'])){
                 $expireAt = date("Y-m-d H:i:s", strtotime("8 days", (new \DateTime($owner['subscription']['created_at']))->getTimestamp()));
