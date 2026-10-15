@@ -264,6 +264,7 @@ $profile = function($req, $res) use ($view){
         $end = date("H:i:s");
         $logMsg .= "end: $end";
         $logMsg .= "ellapsed: " . date_diff(new DateTime($start), new DateTime($end))->format("%H hrs, %I min, %S s");
+        Log::info($logMsg);
         
         return $res->send($view->render(TEMPLATES_DIR . "/$dir/layout/layout", $context));
     } catch(\Exception $e){
