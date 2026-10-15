@@ -8,7 +8,7 @@ services:
     ports:
       - "5050-5054:80"
     volumes:
-      - ./konektem/konektem_gh:/var/www/html
+      - ./:/var/www/html
       - ./vendor:/var/www/html/vendor
       - ./libs:/var/www/html/libs
     environment:
