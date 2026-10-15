@@ -249,6 +249,9 @@ function openModal(){
             const count = selectedIds.size;
             selectedCountDisplay.textContent = count;
             publishBtn.disabled = count === 0;
+            if(hasActiveSubscription){
+                premiumPublishBtn.disabled = count === 0 || count > 1;
+            }
             if (count > 0) {
                 publishBtn.innerHTML = `<i class="fas fa-rocket"></i> Publish (${count})`;
             } else {
@@ -300,6 +303,57 @@ function openModal(){
             document.body.style.overflow = '';
         }
 
+        async function publish(url, body = {}){
+            const selected = [];
+            
+            // gather selected items from all sections
+            for (const [section, items] of Object.entries(allItems)) {
+                //const items = allItems[section] || [];
+                items.forEach(item => {
+                    if (selectedIds.has(item.id)) {
+                        selected.push({ ...item, section });
+                    }
+                });
+            }
+
+            // Filter out any published items (safety check)
+            const validSelected = selected.filter(item => !(item.public === 1 || item.public === true));
+            //console.log(selected);
+            
+            if (validSelected.length === 0) {
+                showError('No valid items to publish. Selected items may already be published.');
+                return false;
+            }
+
+        
+            const response = await fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({...body, items: validSelected})
+            });
+            
+            if(response.status === 401){
+                showError('Session timeout');
+                setTimeout(() => window.location.href = '/auth/logout', 500);
+                return false;
+            }
+            
+            const result = await response.json();
+            if(result.success){
+                showSuccess(result.message);
+                // Clear selection and refresh
+                selectedIds.clear();
+                // Refresh current section to update published status
+                sessionStorage.removeItem(`item_select_${currentSection}`);
+                await fetchSection(currentSection);
+                closeBtn.click();
+            } else {
+                showError(result.message);
+            }
+        }
         // ---------- event listeners ----------
         closeBtn.addEventListener('click', closeModal);
         overlay.addEventListener('click', (e) => {
@@ -314,6 +368,7 @@ function openModal(){
             if (section) switchSection(section);
         });
 
+
         // clear selection
         clearBtn.addEventListener('click', clearSelection);
 
@@ -321,59 +376,12 @@ function openModal(){
         publishBtn.addEventListener('click', async () => {
             if (publishBtn.disabled) return;
             try {
-                const selected = [];
                 publishBtn.disabled = true;
                 const buttonContent = publishBtn.innerHTML;
                 publishBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Publishing...';
                 
-                // gather selected items from all sections
-                for (const [section, items] of Object.entries(allItems)) {
-                    //const items = allItems[section] || [];
-                    items.forEach(item => {
-                        if (selectedIds.has(item.id)) {
-                            selected.push({ ...item, section });
-                        }
-                    });
-                }
-
-                // Filter out any published items (safety check)
-                const validSelected = selected.filter(item => !(item.public === 1 || item.public === true));
-                //console.log(selected);
-                
-                if (validSelected.length === 0) {
-                    showError('No valid items to publish. Selected items may already be published.');
-                    publishBtn.innerHTML = buttonContent;
-                    publishBtn.disabled = false;
-                    return;
-                }
-
-            
-                const response = await fetch('/user/api/publish', {
-                    method: 'POST',
-                    headers: {
-                        'Authorization': `Bearer ${localStorage.getItem('token')}`,
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(validSelected)
-                });
-                
-                if(response.status === 401){
-                    showError('Session timeout');
-                    setTimeout(() => window.location.href = '/auth/logout', 500);
-                    return;
-                }
-                
-                const result = await response.json();
-                if(result.success){
-                    showSuccess(result.message);
-                    // Clear selection and refresh
-                    selectedIds.clear();
-                    // Refresh current section to update published status
-                    await fetchSection(currentSection);
-                    closeBtn.click();
-                } else {
-                    showError(result.message);
-                }
+                await publish('/user/api/publish');
+                publishBtn.innerHTML = buttonContent;
             } catch(err){
                 console.error(err);
                 showError('An error occurred while publishing');
@@ -382,6 +390,22 @@ function openModal(){
                 publishBtn.disabled = false;
             }
         });
+
+        premiumPublishBtn?.addEventListener('click', async () => {
+            if(premiumPublishBtn.disabled) return;
+            try {
+                premiumPublishBtn.disabled = true;
+                const premiumPublishBtn = premiumPublishBtn.innerHTML;
+                premiumPublishBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Publishing...';
+                await publish('/user/api/publish', { premium: true });
+                premiumPublishBtn.innerHTML = buttonContent;
+            } catch(e){
+                console.error(e);
+            } finally {
+                premiumPublishBtn.innerHTML = buttonContent;
+                premiumPublishBtn.disabled = false;
+            }
+        })
 
         // keyboard: escape to close
         document.addEventListener('keydown', (e) => {

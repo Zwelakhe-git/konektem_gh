@@ -39,7 +39,7 @@ class PostingService{
                 ]);
             }
                         
-            $sections = array_reduce($data, function($group, $item){
+            $sections = array_reduce($data['items'], function($group, $item){
                 $item = (array)$item;
                 if(!array_key_exists($item['section'], $group)){
                     $group[$item['section']] = [];
@@ -58,7 +58,7 @@ class PostingService{
             $pdo->beginTransaction();
             $publishCount = 0;
             $updatedItems = [];
-            $hasPremiumSubscription = isset($this->userPayload['subscription']) && !empty(json_decode($this->userPayload['subscription'], true));
+            
             $mainPageAddCount = 0;
 
             // Map section to table name
@@ -106,8 +106,22 @@ class PostingService{
                     'message' => 'Failed to publish content. No items were updated.'
                 ]);
             }
-
-            if($hasPremiumSubscription){
+            if(isset($data['premium']) && $data['premium']){
+                $hasPremiumSubscription = isset($this->userPayload['subscription']) && !empty(json_decode($this->userPayload['subscription'], true));
+                if(!$hasPremiumSubscription){
+                    $pdo->rollBack();
+                    return $res->json([
+                        'success' => false,
+                        'message' => "Failed to add items to main page. subscription is not active"
+                    ]);
+                }
+                if(count($updatedItems) > 1){
+                    $pdo->rollBack();
+                    return $res->json([
+                        'success' => false,
+                        'message' => "Can only boost one item per subscription to the main page"
+                    ]);
+                }
                 Log::info("user {$this->userPayload['id']} has premium. Adding content to main page:");
                 $mpModel = new \Konektem\Models\MainPageContentModel();
                 foreach($updatedItems as $section => $ids){
@@ -118,8 +132,9 @@ class PostingService{
                 }
                 $sub = json_decode($this->userPayload['subscription'], true);
                 (new \Konektem\Models\AdminModel())->terminateUserSubscription($this->userPayload['id'], $sub['id']);
-                
             }
+
+            
             $pdo->commit();
 
             // Send email notification
