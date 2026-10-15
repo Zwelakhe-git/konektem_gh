@@ -48,6 +48,8 @@ $profile = function($req, $res) use ($view){
         if(session_status() === PHP_SESSION_NONE){
             session_start();
         }
+        $logMsg = "measuring login time: ";
+        $start = date("H:i:s");
         //Log::info("profile method called");
         $allowedActions = ['edit', 'create', 'list', 'preview'];
         $controller = new \Konektem\Controllers\AdminController();
@@ -259,8 +261,11 @@ $profile = function($req, $res) use ($view){
         }
 
         $context['template'] = $template;
+        $end = date("H:i:s");
+        $logMsg .= "end: $end";
+        $logMsg .= "ellapsed: " . date_diff(new DateTime($start), new DateTime($end))->format("%H hrs, %I min, %S s");
         
-        $res->send($view->render(TEMPLATES_DIR . "/$dir/layout/layout", $context));
+        return $res->send($view->render(TEMPLATES_DIR . "/$dir/layout/layout", $context));
     } catch(\Exception $e){
         Log::error("{$e->getMessage()} in {$e->getFile()} line {$e->getLine()}");
         return $res->redirect(BASE_URL . '/error/500');
