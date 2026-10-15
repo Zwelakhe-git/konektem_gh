@@ -41,7 +41,11 @@ const modalHtml = () => {
                 <i class="fas fa-crown"></i> Premium
                 </button>
             </div>
-            ` : ''
+            ` : `<div id="premiumPublishBtn" class="container h-fit w-fit" aria-label="Layout container">
+      <div id="forma-621855c2-47bf-455e-821e-3e5438241c38" class="rectangle" aria-label="Rectangle">
+        publish to main page
+      </div>
+        </div>`
             }
             <button class="btn-secondary-outline" id="clearSelectionBtn">
                 <i class="fas fa-times"></i> Clear
