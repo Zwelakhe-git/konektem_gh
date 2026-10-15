@@ -3,6 +3,7 @@ namespace Konektem\Controllers;
 require_once __DIR__ . '/../../config/config.php';
 require_once HTDOCS . '/vendor/autoload.php';
 
+use DateTime;
 use Konektem\Models\NewsModel;
 use Konektem\Models\MusicModel;
 use Konektem\Models\ServicesModel;
@@ -77,9 +78,15 @@ class AdminController {
     public function login($role = 'guest'){
         try{
             if($_SERVER['REQUEST_METHOD'] === 'POST'){
+                $logMsg = "measuring login time: ";
+                $start = date("H:i:s");
+                $logMsg .= "\nStart: $start";
                 if ($this->auth->isLoggedIn($role)){
                     $this->auth->checkSessionTimeout();
-
+                    $end = date("H:i:s");
+                    $logMsg .= "end: $end";
+                    $logMsg .= "ellapsed: " . date_diff(new DateTime($start), new DateTime($end))->format("%H hrs, %I min, %S s");
+                    Log::info($logMsg);
                     return $this->auth->isLoggedIn($role) ?
                         ['success' => true, 'message' => $_SESSION['user']['name'], 'user' => $_SESSION['user'], 'token' => $_SESSION['token'] ] :
                         ['success' => false, 'message' => 'session timeout' ]
@@ -88,7 +95,10 @@ class AdminController {
                 $response = $role === 'admin' ? $this->model->login($_POST['email'], $_POST['password']) : $this->model->grantLogin($_POST);
                 if($response["success"]){
                     $this->auth->login($response['user'], $response['token']);
-                    
+                    $end = date("H:i:s");
+                    $logMsg .= "end: $end";
+                    $logMsg .= "ellapsed: " . date_diff(new DateTime($start), new DateTime($end))->format("%H hrs, %I min, %S s");
+                    Log::info($logMsg);
                     return [
                         'success' => true, 
                         'message' => 'Login successful', 
@@ -101,7 +111,7 @@ class AdminController {
             } else {
                 return ["success" => false,'message' => 'missing parameters'];
             }
-        } catch(Exception $e){
+        } catch(\Exception $e){
             Log::error("AdminController - userLogin - {$e->getMessage()}");
             return ["success" => false,'message' => "Server Error"];
         }
