@@ -241,6 +241,7 @@ function openModal(){
         function updatePublishButton() {
             const count = selectedIds.size;
             selectedCountDisplay.textContent = count;
+            publishBtn.disabled = count === 0;
             premiumBtn.disabled = count === 0 || count > 1;
             premiumBtn.parentElement.classList.toggle('disabled', premiumBtn.disabled);
             if (count > 0) {

@@ -433,8 +433,7 @@
   color: white;
 }
 
-#premiumBtn.disabled,
-#premiumBtn .inner:disabled{
+#premiumBtn.disabled{
     opacity: 0.4;
 }
 

@@ -740,7 +740,7 @@ class PaymentApi {
                     order_status, 
                     payment_status, 
                     payment_method,
-                    order_details
+                    order_details,
                     order_date
                 ) VALUES (?, ?, ?, 'pending', 'pending', 'moncash', ?, NOW())
             ");
