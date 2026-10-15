@@ -41,7 +41,7 @@ const modalHtml = () => {
                 <i class="fas fa-crown"></i> Premium
                 </button>
             </div>
-            ` : `<div id="premiumPublishBtn" class="container h-fit w-fit" aria-label="Layout container">
+            ` : `<div id="premiumPublishBtn" class="h-fit w-fit" aria-label="Layout container">
       <button id="forma-621855c2-47bf-455e-821e-3e5438241c38" class="rectangle" aria-label="Rectangle" disabled>
         publish to main page
       </button>
