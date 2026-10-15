@@ -774,6 +774,13 @@ class PaymentApi {
                 'success' => false,
                 'message' => "Server error"
             ];
+        } catch(\Throwable $e){
+            $this->orderModel->pdo->rollBack();
+            Log::error('', $e);
+            return [
+                'success' => false,
+                'message' => "Server error"
+            ];
         }
     }
 
