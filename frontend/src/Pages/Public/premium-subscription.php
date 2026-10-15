@@ -261,7 +261,13 @@ document.addEventListener('DOMContentLoaded', function() {
         // Collect form data
         const formData = new FormData(this);
         const data = Object.fromEntries(formData.entries());
+        const sp = new URLSearchParams(window.location.search);
+        if(!sp.get('token')){
+            showError("Missing token");
+            return;
+        }
         data.user_id = user.id;
+        data['order_details'] = atob(sp.get('token'));
 
         // Add payment method
         let payment_method = document.getElementById('paymentMethod').value;

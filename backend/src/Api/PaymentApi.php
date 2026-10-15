@@ -254,8 +254,10 @@ class PaymentApi {
                     ]);
                 }
                 $amount = $product['price'] ?: $amount;
+                $orderDetails = $data['order_details'] ?? "{}";
                 // Создаем заказ со статусом pending
-                $orderResult = $this->createPendingOrder($userId, $productId, $amount);
+                Log::info("order details: $orderDetails");
+                $orderResult = $this->createPendingOrder($userId, $productId, $amount, $orderDetails);
             }
             
             if (!$orderResult['success']) {
@@ -724,7 +726,7 @@ class PaymentApi {
     /**
      * Создание заказа со статусом pending
      */
-    private function createPendingOrder($userId, $productId, $amount) {
+    private function createPendingOrder($userId, $productId, $amount, $orderDetails = "{}") {
         try {
             $orderNumber = 'ORD_' . date('YmdHis') . '_' . rand(1000, 9999);
             if(!$this->orderModel->pdo->inTransaction()){
@@ -738,10 +740,11 @@ class PaymentApi {
                     order_status, 
                     payment_status, 
                     payment_method,
+                    order_details
                     order_date
-                ) VALUES (?, ?, ?, 'pending', 'pending', 'moncash', NOW())
+                ) VALUES (?, ?, ?, 'pending', 'pending', 'moncash', ?, NOW())
             ");
-            $stmt->execute([$userId, $orderNumber, $amount]);
+            $stmt->execute([$userId, $orderNumber, $amount, $orderDetails]);
             
             $orderId = $this->orderModel->pdo->lastInsertId();
             

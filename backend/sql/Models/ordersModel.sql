@@ -18,3 +18,5 @@ CREATE TABLE `orders` (
   KEY `user_id` (`user_id`),
   FOREIGN KEY (`user_id`) REFERENCES `users`(`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+ALTER TABLE orders ADD order_details JSON DEFAULT (JSON_OBJECT());

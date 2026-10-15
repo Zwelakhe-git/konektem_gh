@@ -394,11 +394,23 @@ function openModal(){
         premiumPublishBtn?.addEventListener('click', async () => {
             if(premiumPublishBtn.disabled) return;
             try {
-                premiumPublishBtn.disabled = true;
-                const premiumPublishBtn = premiumPublishBtn.innerHTML;
-                premiumPublishBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Publishing...';
-                await publish('/user/api/publish', { premium: true });
-                premiumPublishBtn.innerHTML = buttonContent;
+                const selected = [];
+            
+                // gather selected items from all sections
+                for (const [section, items] of Object.entries(allItems)) {
+                    //const items = allItems[section] || [];
+                    items.forEach(item => {
+                        if (selectedIds.has(item.id)) {
+                            selected.push({ item_id: item.id, item_type: section });
+                        }
+                    });
+                }
+                let payload = {
+                    items: selected
+                };
+                const token = btoa(JSON.stringify(payload));
+                window.location.href = `/premium-subscription?token=${token}`;
+                return;
             } catch(e){
                 console.error(e);
             } finally {
