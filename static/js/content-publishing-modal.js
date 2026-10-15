@@ -35,7 +35,7 @@ const modalHtml = () => {
 
         <!-- footer -->
         <div class="modal-footer-custom">
-            <div id="premiumBtn">
+            <div id="premiumBtn" disabled>
                 <button class="btn-secondary-outline inner border-0" disabled>
                 <i class="fas fa-crown"></i> Boost
                 </button>
@@ -241,10 +241,8 @@ function openModal(){
         function updatePublishButton() {
             const count = selectedIds.size;
             selectedCountDisplay.textContent = count;
-            publishBtn.disabled = count === 0;
-            if(hasActiveSubscription){
-                premiumBtn.disabled = count === 0 || count > 1;
-            }
+            premiumBtn.disabled = count === 0 || count > 1;
+            premiumBtn.parentElement.classList.toggle('disabled', premiumBtn.disabled);
             if (count > 0) {
                 publishBtn.innerHTML = `<i class="fas fa-rocket"></i> Publish (${count})`;
             } else {
@@ -388,6 +386,7 @@ function openModal(){
             if(premiumBtn.disabled) return;
             try {
                 premiumBtn.disabled = true;
+                premiumBtn.parentElement.classList.toggle('disabled', premiumBtn.disabled);
                 const selected = [];
             
                 // gather selected items from all sections
@@ -409,6 +408,7 @@ function openModal(){
                 console.error(e);
             } finally {
                 premiumBtn.disabled = false;
+                premiumBtn.parentElement.classList.toggle('disabled', premiumBtn.disabled);
             }
         })
 
